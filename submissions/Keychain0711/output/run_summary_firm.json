@@ -1,0 +1,126 @@
+{
+  "submission": "FF Master + Futurist \u2014 Bimanual Watermelon Quartering",
+  "timestamp_utc": "2026-07-03T20:38:31Z",
+  "n_episodes": 4,
+  "success_rate": 1.0,
+  "n_success": 4,
+  "avg_cut_time_s": 2.145,
+  "std_cut_time_s": 0.0246,
+  "avg_posture_rms_rad": 0.09836,
+  "avg_cut_quality_pct": 58.9,
+  "wm_seed": 42,
+  "wm_offsets_cm": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      -1.0,
+      2.1
+    ],
+    [
+      -2.5,
+      0.8
+    ],
+    [
+      -0.6,
+      1.4
+    ]
+  ],
+  "render": {
+    "video_path": null,
+    "fps": 30,
+    "width": 864,
+    "height": 480
+  },
+  "sensor_types": [
+    "touch",
+    "velocimeter",
+    "accelerometer",
+    "gyro",
+    "framequat",
+    "framelinvel",
+    "framepos"
+  ],
+  "n_sensors": 10,
+  "n_control_phases": 22,
+  "robots": [
+    "FF Master (cuts)",
+    "Futurist (serves)"
+  ],
+  "material_k_per_episode_Npm": [
+    10989.0,
+    11340.9,
+    11341.3,
+    14765.0
+  ],
+  "material_k_final_Npm": 14765.0,
+  "material_profile": "firm",
+  "serve_delivery_err_mm": [
+    5.5,
+    5.5,
+    5.5,
+    5.5
+  ],
+  "grasp_closure_fingertips": [
+    [
+      4,
+      -4.1
+    ],
+    [
+      4,
+      -4.1
+    ],
+    [
+      4,
+      -4.1
+    ],
+    [
+      4,
+      -4.1
+    ]
+  ],
+  "serve_success_rate": 1.0,
+  "episodes": [
+    {
+      "ep": 1,
+      "success": "YES",
+      "cut_time_s": "2.176",
+      "min_blade_mm": "82.0",
+      "max_force_N": "149.9",
+      "posture_rms_rad": "0.0460",
+      "cut_quality_pct": "61.1",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 2,
+      "success": "YES",
+      "cut_time_s": "2.142",
+      "min_blade_mm": "65.5",
+      "max_force_N": "147.3",
+      "posture_rms_rad": "0.1157",
+      "cut_quality_pct": "57.7",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 3,
+      "success": "YES",
+      "cut_time_s": "2.108",
+      "min_blade_mm": "56.4",
+      "max_force_N": "346.7",
+      "posture_rms_rad": "0.1159",
+      "cut_quality_pct": "57.1",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 4,
+      "success": "YES",
+      "cut_time_s": "2.154",
+      "min_blade_mm": "70.4",
+      "max_force_N": "133.5",
+      "posture_rms_rad": "0.1157",
+      "cut_quality_pct": "59.8",
+      "failure": "\u2014"
+    }
+  ]
+}

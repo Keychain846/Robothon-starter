@@ -1,0 +1,1189 @@
+<mujoco model="ff_master_watermelon_cutter">
+  <!--
+    FF Master robot cuts a watermelon using its right arm.
+    The 5-finger fist grips a chef's knife; the arm swings from home
+    (raised) to strike position, the blade contacts wm_whole, and
+    CutTriggerRobot swaps it for two flying halves with cut faces.
+
+    meshdir is relative to this file's location (assets/).
+    Points to the shared Robothon-starter/assets/Master/meshes — no local copy needed.
+  -->
+  <compiler angle="radian" eulerseq="XYZ"
+            meshdir="../../../assets/Master/meshes" autolimits="true"/>
+
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+
+  <visual>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global offwidth="1280" offheight="720"/>
+  </visual>
+
+  <!-- Override damping so un-actuated joints resist gravity -->
+  <default>
+    <default class="ff_master">
+      <site rgba="1 0 0 1" size="0.01" group="5"/>
+      <joint damping="8.0" armature="0.03" frictionloss="0.3"/>
+      <default class="visual">
+        <geom group="2" type="mesh" contype="0" conaffinity="0" density="0"/>
+      </default>
+      <default class="collision">
+        <geom group="3" type="mesh"/>
+        <default class="foot">
+          <geom type="sphere" size="0.005"/>
+        </default>
+      </default>
+    </default>
+  </default>
+
+  <asset>
+    <mesh name="wm_wedge_rind" scale="1.4 1.4 1.4" vertex="0.0900 -0.0013 -0.0013 0.0900 -0.0009 -0.0016 0.0900 -0.0005 -0.0017 0.0900 -0.0000 -0.0018 0.0900 0.0005 -0.0017 0.0900 0.0009 -0.0016 0.0900 0.0013 -0.0013 0.0865 -0.0175 -0.0175 0.0865 -0.0124 -0.0214 0.0865 -0.0064 -0.0239 0.0865 -0.0000 -0.0247 0.0865 0.0064 -0.0239 0.0865 0.0124 -0.0214 0.0865 0.0175 -0.0175 0.0773 -0.0326 -0.0326 0.0773 -0.0230 -0.0399 0.0773 -0.0119 -0.0445 0.0773 -0.0000 -0.0460 0.0773 0.0119 -0.0445 0.0773 0.0230 -0.0399 0.0773 0.0326 -0.0326 0.0630 -0.0454 -0.0454 0.0630 -0.0321 -0.0557 0.0630 -0.0166 -0.0621 0.0630 -0.0000 -0.0643 0.0630 0.0166 -0.0621 0.0630 0.0321 -0.0557 0.0630 0.0454 -0.0454 0.0445 -0.0553 -0.0553 0.0445 -0.0391 -0.0678 0.0445 -0.0203 -0.0756 0.0445 -0.0000 -0.0782 0.0445 0.0203 -0.0756 0.0445 0.0391 -0.0678 0.0445 0.0553 -0.0553 0.0230 -0.0615 -0.0615 0.0230 -0.0435 -0.0754 0.0230 -0.0225 -0.0840 0.0230 -0.0000 -0.0870 0.0230 0.0225 -0.0840 0.0230 0.0435 -0.0754 0.0230 0.0615 -0.0615 0.0000 -0.0636 -0.0636 0.0000 -0.0450 -0.0779 0.0000 -0.0233 -0.0869 0.0000 -0.0000 -0.0900 0.0000 0.0233 -0.0869 0.0000 0.0450 -0.0779 0.0000 0.0636 -0.0636 -0.0230 -0.0615 -0.0615 -0.0230 -0.0435 -0.0754 -0.0230 -0.0225 -0.0840 -0.0230 -0.0000 -0.0870 -0.0230 0.0225 -0.0840 -0.0230 0.0435 -0.0754 -0.0230 0.0615 -0.0615 -0.0445 -0.0553 -0.0553 -0.0445 -0.0391 -0.0678 -0.0445 -0.0203 -0.0756 -0.0445 -0.0000 -0.0782 -0.0445 0.0203 -0.0756 -0.0445 0.0391 -0.0678 -0.0445 0.0553 -0.0553 -0.0630 -0.0454 -0.0454 -0.0630 -0.0321 -0.0557 -0.0630 -0.0166 -0.0621 -0.0630 -0.0000 -0.0643 -0.0630 0.0166 -0.0621 -0.0630 0.0321 -0.0557 -0.0630 0.0454 -0.0454 -0.0773 -0.0326 -0.0326 -0.0773 -0.0230 -0.0399 -0.0773 -0.0119 -0.0445 -0.0773 -0.0000 -0.0460 -0.0773 0.0119 -0.0445 -0.0773 0.0230 -0.0399 -0.0773 0.0326 -0.0326 -0.0865 -0.0175 -0.0175 -0.0865 -0.0124 -0.0214 -0.0865 -0.0064 -0.0239 -0.0865 -0.0000 -0.0247 -0.0865 0.0064 -0.0239 -0.0865 0.0124 -0.0214 -0.0865 0.0175 -0.0175 -0.0900 -0.0013 -0.0013 -0.0900 -0.0009 -0.0016 -0.0900 -0.0005 -0.0017 -0.0900 -0.0000 -0.0018 -0.0900 0.0005 -0.0017 -0.0900 0.0009 -0.0016 -0.0900 0.0013 -0.0013 0.0900 0.0000 0.0000 -0.0900 0.0000 0.0000"/>
+    <mesh name="wm_wedge_pith" scale="1.4 1.4 1.4" vertex="0.0875 -0.0012 0.0006 0.0875 -0.0009 0.0003 0.0875 -0.0005 0.0001 0.0875 -0.0000 0.0001 0.0875 0.0005 0.0001 0.0875 0.0009 0.0003 0.0875 0.0012 0.0006 0.0841 -0.0170 -0.0152 0.0841 -0.0120 -0.0190 0.0841 -0.0062 -0.0214 0.0841 -0.0000 -0.0223 0.0841 0.0062 -0.0214 0.0841 0.0120 -0.0190 0.0841 0.0170 -0.0152 0.0752 -0.0316 -0.0298 0.0752 -0.0224 -0.0370 0.0752 -0.0116 -0.0414 0.0752 -0.0000 -0.0430 0.0752 0.0116 -0.0414 0.0752 0.0224 -0.0370 0.0752 0.0316 -0.0298 0.0613 -0.0442 -0.0424 0.0613 -0.0312 -0.0523 0.0613 -0.0162 -0.0586 0.0613 -0.0000 -0.0607 0.0613 0.0162 -0.0586 0.0613 0.0312 -0.0523 0.0613 0.0442 -0.0424 0.0432 -0.0538 -0.0520 0.0432 -0.0380 -0.0641 0.0432 -0.0197 -0.0717 0.0432 -0.0000 -0.0743 0.0432 0.0197 -0.0717 0.0432 0.0380 -0.0641 0.0432 0.0538 -0.0520 0.0224 -0.0598 -0.0580 0.0224 -0.0423 -0.0715 0.0224 -0.0219 -0.0799 0.0224 -0.0000 -0.0828 0.0224 0.0219 -0.0799 0.0224 0.0423 -0.0715 0.0224 0.0598 -0.0580 0.0000 -0.0619 -0.0601 0.0000 -0.0438 -0.0740 0.0000 -0.0226 -0.0827 0.0000 -0.0000 -0.0857 0.0000 0.0226 -0.0827 0.0000 0.0437 -0.0740 0.0000 0.0619 -0.0601 -0.0224 -0.0598 -0.0580 -0.0224 -0.0423 -0.0715 -0.0224 -0.0219 -0.0799 -0.0224 -0.0000 -0.0828 -0.0224 0.0219 -0.0799 -0.0224 0.0423 -0.0715 -0.0224 0.0598 -0.0580 -0.0432 -0.0538 -0.0520 -0.0432 -0.0380 -0.0641 -0.0432 -0.0197 -0.0717 -0.0432 -0.0000 -0.0743 -0.0432 0.0197 -0.0717 -0.0432 0.0380 -0.0641 -0.0432 0.0538 -0.0520 -0.0613 -0.0442 -0.0424 -0.0613 -0.0312 -0.0523 -0.0613 -0.0162 -0.0586 -0.0613 -0.0000 -0.0607 -0.0613 0.0162 -0.0586 -0.0613 0.0312 -0.0523 -0.0613 0.0442 -0.0424 -0.0752 -0.0316 -0.0298 -0.0752 -0.0224 -0.0370 -0.0752 -0.0116 -0.0414 -0.0752 -0.0000 -0.0430 -0.0752 0.0116 -0.0414 -0.0752 0.0224 -0.0370 -0.0752 0.0316 -0.0298 -0.0841 -0.0170 -0.0152 -0.0841 -0.0120 -0.0190 -0.0841 -0.0062 -0.0214 -0.0841 -0.0000 -0.0223 -0.0841 0.0062 -0.0214 -0.0841 0.0120 -0.0190 -0.0841 0.0170 -0.0152 -0.0875 -0.0012 0.0006 -0.0875 -0.0009 0.0003 -0.0875 -0.0005 0.0001 -0.0875 -0.0000 0.0001 -0.0875 0.0005 0.0001 -0.0875 0.0009 0.0003 -0.0875 0.0012 0.0006 0.0875 0.0000 0.0018 -0.0875 0.0000 0.0018"/>
+    <mesh name="wm_wedge_flesh" scale="1.4 1.4 1.4" vertex="0.0850 -0.0012 0.0024 0.0850 -0.0008 0.0021 0.0850 -0.0004 0.0020 0.0850 -0.0000 0.0019 0.0850 0.0004 0.0020 0.0850 0.0008 0.0021 0.0850 0.0012 0.0024 0.0817 -0.0165 -0.0129 0.0817 -0.0117 -0.0166 0.0817 -0.0060 -0.0190 0.0817 -0.0000 -0.0198 0.0817 0.0060 -0.0190 0.0817 0.0117 -0.0166 0.0817 0.0165 -0.0129 0.0730 -0.0307 -0.0271 0.0730 -0.0217 -0.0341 0.0730 -0.0113 -0.0384 0.0730 -0.0000 -0.0399 0.0730 0.0113 -0.0384 0.0730 0.0217 -0.0341 0.0730 0.0307 -0.0271 0.0595 -0.0429 -0.0393 0.0595 -0.0304 -0.0490 0.0595 -0.0157 -0.0550 0.0595 -0.0000 -0.0571 0.0595 0.0157 -0.0550 0.0595 0.0304 -0.0490 0.0595 0.0429 -0.0393 0.0420 -0.0523 -0.0487 0.0420 -0.0369 -0.0604 0.0420 -0.0191 -0.0678 0.0420 -0.0000 -0.0703 0.0420 0.0191 -0.0678 0.0420 0.0369 -0.0604 0.0420 0.0523 -0.0487 0.0217 -0.0581 -0.0545 0.0217 -0.0411 -0.0676 0.0217 -0.0213 -0.0758 0.0217 -0.0000 -0.0786 0.0217 0.0213 -0.0758 0.0217 0.0411 -0.0676 0.0217 0.0581 -0.0545 0.0000 -0.0601 -0.0565 0.0000 -0.0425 -0.0700 0.0000 -0.0220 -0.0785 0.0000 -0.0000 -0.0814 0.0000 0.0220 -0.0785 0.0000 0.0425 -0.0700 0.0000 0.0601 -0.0565 -0.0217 -0.0581 -0.0545 -0.0217 -0.0411 -0.0676 -0.0217 -0.0213 -0.0758 -0.0217 -0.0000 -0.0786 -0.0217 0.0213 -0.0758 -0.0217 0.0411 -0.0676 -0.0217 0.0581 -0.0545 -0.0420 -0.0523 -0.0487 -0.0420 -0.0369 -0.0604 -0.0420 -0.0191 -0.0678 -0.0420 -0.0000 -0.0703 -0.0420 0.0191 -0.0678 -0.0420 0.0369 -0.0604 -0.0420 0.0523 -0.0487 -0.0595 -0.0429 -0.0393 -0.0595 -0.0304 -0.0490 -0.0595 -0.0157 -0.0550 -0.0595 -0.0000 -0.0571 -0.0595 0.0157 -0.0550 -0.0595 0.0304 -0.0490 -0.0595 0.0429 -0.0393 -0.0730 -0.0307 -0.0271 -0.0730 -0.0217 -0.0341 -0.0730 -0.0113 -0.0384 -0.0730 -0.0000 -0.0399 -0.0730 0.0113 -0.0384 -0.0730 0.0217 -0.0341 -0.0730 0.0307 -0.0271 -0.0817 -0.0165 -0.0129 -0.0817 -0.0117 -0.0166 -0.0817 -0.0060 -0.0190 -0.0817 -0.0000 -0.0198 -0.0817 0.0060 -0.0190 -0.0817 0.0117 -0.0166 -0.0817 0.0165 -0.0129 -0.0850 -0.0012 0.0024 -0.0850 -0.0008 0.0021 -0.0850 -0.0004 0.0020 -0.0850 -0.0000 0.0019 -0.0850 0.0004 0.0020 -0.0850 0.0008 0.0021 -0.0850 0.0012 0.0024 0.0850 0.0000 0.0036 -0.0850 0.0000 0.0036"/>
+    <mesh name="wm_wedge_core" scale="1.4 1.4 1.4" vertex="0.0480 -0.0007 0.0043 0.0480 -0.0005 0.0042 0.0480 -0.0002 0.0041 0.0480 -0.0000 0.0040 0.0480 0.0002 0.0041 0.0480 0.0005 0.0042 0.0480 0.0007 0.0043 0.0462 -0.0093 -0.0043 0.0462 -0.0066 -0.0064 0.0462 -0.0034 -0.0077 0.0462 -0.0000 -0.0082 0.0462 0.0034 -0.0077 0.0462 0.0066 -0.0064 0.0462 0.0093 -0.0043 0.0412 -0.0174 -0.0124 0.0412 -0.0123 -0.0163 0.0412 -0.0064 -0.0187 0.0412 -0.0000 -0.0196 0.0412 0.0064 -0.0187 0.0412 0.0123 -0.0163 0.0412 0.0174 -0.0124 0.0336 -0.0242 -0.0192 0.0336 -0.0171 -0.0247 0.0336 -0.0089 -0.0281 0.0336 -0.0000 -0.0293 0.0336 0.0089 -0.0281 0.0336 0.0171 -0.0247 0.0336 0.0242 -0.0192 0.0237 -0.0295 -0.0245 0.0237 -0.0209 -0.0311 0.0237 -0.0108 -0.0353 0.0237 -0.0000 -0.0367 0.0237 0.0108 -0.0353 0.0237 0.0209 -0.0311 0.0237 0.0295 -0.0245 0.0123 -0.0328 -0.0278 0.0123 -0.0232 -0.0352 0.0123 -0.0120 -0.0398 0.0123 -0.0000 -0.0414 0.0123 0.0120 -0.0398 0.0123 0.0232 -0.0352 0.0123 0.0328 -0.0278 0.0000 -0.0339 -0.0289 0.0000 -0.0240 -0.0366 0.0000 -0.0124 -0.0414 0.0000 -0.0000 -0.0430 0.0000 0.0124 -0.0414 0.0000 0.0240 -0.0366 0.0000 0.0339 -0.0289 -0.0123 -0.0328 -0.0278 -0.0123 -0.0232 -0.0352 -0.0123 -0.0120 -0.0398 -0.0123 -0.0000 -0.0414 -0.0123 0.0120 -0.0398 -0.0123 0.0232 -0.0352 -0.0123 0.0328 -0.0278 -0.0237 -0.0295 -0.0245 -0.0237 -0.0209 -0.0311 -0.0237 -0.0108 -0.0353 -0.0237 -0.0000 -0.0367 -0.0237 0.0108 -0.0353 -0.0237 0.0209 -0.0311 -0.0237 0.0295 -0.0245 -0.0336 -0.0242 -0.0192 -0.0336 -0.0171 -0.0247 -0.0336 -0.0089 -0.0281 -0.0336 -0.0000 -0.0293 -0.0336 0.0089 -0.0281 -0.0336 0.0171 -0.0247 -0.0336 0.0242 -0.0192 -0.0412 -0.0174 -0.0124 -0.0412 -0.0123 -0.0163 -0.0412 -0.0064 -0.0187 -0.0412 -0.0000 -0.0196 -0.0412 0.0064 -0.0187 -0.0412 0.0123 -0.0163 -0.0412 0.0174 -0.0124 -0.0462 -0.0093 -0.0043 -0.0462 -0.0066 -0.0064 -0.0462 -0.0034 -0.0077 -0.0462 -0.0000 -0.0082 -0.0462 0.0034 -0.0077 -0.0462 0.0066 -0.0064 -0.0462 0.0093 -0.0043 -0.0480 -0.0007 0.0043 -0.0480 -0.0005 0.0042 -0.0480 -0.0002 0.0041 -0.0480 -0.0000 0.0040 -0.0480 0.0002 0.0041 -0.0480 0.0005 0.0042 -0.0480 0.0007 0.0043 0.0480 0.0000 0.0050 -0.0480 0.0000 0.0050"/>
+    <!-- FF Master meshes -->
+    <mesh name="pelvis"                  file="pelvis.STL"/>
+    <mesh name="imu_in_pelvis_link"      file="imu_in_pelvis_link.STL"/>
+    <mesh name="left_hip_pitch_link"     file="left_hip_pitch_link.STL"/>
+    <mesh name="left_hip_roll_link"      file="left_hip_roll_link.STL"/>
+    <mesh name="left_hip_roll_link1"     file="left_hip_roll_link.STL" scale="1 0.9 1"/>
+    <mesh name="left_hip_yaw_link"       file="left_hip_yaw_link.STL"/>
+    <mesh name="left_knee_link"          file="left_knee_link.STL"/>
+    <mesh name="left_ankle_pitch_link"   file="left_ankle_pitch_link.STL"/>
+    <mesh name="left_ankle_roll_link"    file="left_ankle_roll_link.STL"/>
+    <mesh name="right_hip_pitch_link"    file="right_hip_pitch_link.STL"/>
+    <mesh name="right_hip_roll_link"     file="right_hip_roll_link.STL"/>
+    <mesh name="right_hip_roll_link1"    file="right_hip_roll_link.STL" scale="1 0.9 1"/>
+    <mesh name="right_hip_yaw_link"      file="right_hip_yaw_link.STL"/>
+    <mesh name="right_knee_link"         file="right_knee_link.STL"/>
+    <mesh name="right_ankle_pitch_link"  file="right_ankle_pitch_link.STL"/>
+    <mesh name="right_ankle_roll_link"   file="right_ankle_roll_link.STL"/>
+    <mesh name="waist_yaw_link"          file="waist_yaw_link.STL"/>
+    <mesh name="waist_pitch_link"        file="waist_pitch_link.STL"/>
+    <mesh name="torso_link"              file="torso_plus_link.STL"/>
+    <mesh name="imu_in_torso_link"       file="imu_in_torso_link.STL"/>
+    <mesh name="left_shoulder_pitch_link"  file="left_shoulder_pitch_link.STL"/>
+    <mesh name="left_shoulder_roll_link"   file="left_shoulder_roll_link.STL"/>
+    <mesh name="left_shoulder_yaw_link"    file="left_shoulder_yaw_link.STL"/>
+    <mesh name="left_elbow_link"           file="left_elbow_link.STL"/>
+    <mesh name="left_wrist_fist_link"      file="left_wrist_fist_link.STL"/>
+    <mesh name="right_shoulder_pitch_link" file="right_shoulder_pitch_link.STL"/>
+    <mesh name="right_shoulder_roll_link"  file="right_shoulder_roll_link.STL"/>
+    <mesh name="right_shoulder_yaw_link"   file="right_shoulder_yaw_link.STL"/>
+    <mesh name="right_elbow_link"          file="right_elbow_link.STL"/>
+    <mesh name="right_wrist_fist_link"     file="right_wrist_fist_link.STL"/>
+    <mesh name="head_yaw_link"             file="head_yaw_link.STL"/>
+    <mesh name="head_pitch_link"           file="head_pitch_link.STL"/>
+    <mesh name="imu_in_head_link"          file="imu_in_head_link.STL"/>
+    <mesh name="rgbd_head_front_link"      file="rgbd_head_front_link.STL"/>
+    <mesh name="stereo_head_front_link"    file="stereo_head_front_link.STL"/>
+    <mesh name="rgb_head_rear_link"        file="rgb_head_rear_link.STL"/>
+    <mesh name="rgb_head_center_link"      file="rgb_head_center_link.STL"/>
+
+    <!-- Scene materials -->
+    <texture name="skybox" type="skybox" builtin="gradient"
+             rgb1="0.35 0.55 0.75" rgb2="0.05 0.05 0.1" width="512" height="512"/>
+    <texture name="checker" type="2d" builtin="checker"
+             rgb1=".12 .20 .30" rgb2=".20 .30 .40" width="300" height="300"/>
+    <material name="checker_mat" texture="checker" texrepeat="5 5" reflectance=".2"/>
+    <material name="metal"     rgba="0.70 0.70 0.82 1" specular="0.9" shininess="0.6"/>
+    <material name="wood"      rgba="0.62 0.42 0.22 1" specular="0.1"/>
+    <material name="blade_mat" rgba="0.88 0.88 0.96 1" specular="1.0" shininess="0.9"/>
+    <material name="handle_mat" rgba="0.45 0.25 0.10 1" specular="0.1"/>
+    <material name="skin_mat"   rgba="0.82 0.65 0.50 1" specular="0.05"/>
+    <!-- Watermelon skin: dark/light checker gives 10 meridional stripes around the WM body -->
+    <texture name="wm_stripe_tex" type="2d" builtin="checker"
+             rgb1="0.06 0.30 0.04" rgb2="0.23 0.63 0.10"
+             width="8" height="8"/>
+    <material name="wm_skin_mat" texture="wm_stripe_tex" texrepeat="10 0.5"
+              specular="0.06" shininess="0.20"/>
+    <!-- These stay for the cut faces and seeds -->
+    <material name="wm_green"  rgba="0.12 0.55 0.08 1" specular="0.15" shininess="0.25"/>
+    <material name="wm_rind"   rgba="0.93 0.90 0.78 1" specular="0.05" shininess="0.10"/>
+    <material name="wm_red"    rgba="0.90 0.12 0.12 1" specular="0.05" shininess="0.10"/>
+    <material name="wm_seed"   rgba="0.10 0.06 0.03 1"/>
+  </asset>
+
+  <worldbody>
+    <light name="sun"  pos="0.5 -0.5 3.0" dir="-0.1 0.2 -1.0"
+           directional="true" diffuse="0.9 0.9 0.9" specular="0.3 0.3 0.3"/>
+    <light name="fill" pos="-1.0 1.0 2.0" dir="0.4 -0.4 -0.8"
+           diffuse="0.4 0.4 0.4"/>
+    <!-- Fill for Futurist plating zone (front-left quadrant) -->
+    <light name="fill2" pos="-0.5 -1.5 2.2" dir="0.2 0.7 -1.0"
+           diffuse="0.35 0.35 0.38"/>
+
+    <!-- Floor -->
+    <geom name="floor" type="plane" size="3 3 0.1" material="checker_mat"
+          conaffinity="3"/>
+
+    <!-- Shared prep table spanning between both robots.
+         FF Master pelvis at (0,0,0.68) faces +X, operates from the LEFT end.
+         Futurist pelvis at (0.90,−0.30,0.98) faces −X, stands CLEAR of the
+         table: x=[0.28, 0.80] ends 10cm before the Futurist's legs.
+         Watermelon centred at x=0.44; quarters land at x≈0.33 / 0.52. -->
+    <body name="table">
+      <geom name="tabletop" type="box" size="0.26 0.35 0.025"
+            pos="0.54 -0.25 0.525" material="wood" conaffinity="3"
+            friction="1 0.005 0.001" condim="6"/>
+      <geom type="cylinder" size="0.025 0.26" pos="0.28 -0.60 0.26"
+            material="wood" contype="0" conaffinity="0"/>
+      <geom type="cylinder" size="0.025 0.26" pos="0.80 -0.60 0.26"
+            material="wood" contype="0" conaffinity="0"/>
+      <geom type="cylinder" size="0.025 0.26" pos="0.28  0.10 0.26"
+            material="wood" contype="0" conaffinity="0"/>
+      <geom type="cylinder" size="0.025 0.26" pos="0.80  0.10 0.26"
+            material="wood" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FF MASTER ROBOT — pelvis welded to world via equality below
+         ═══════════════════════════════════════════════════════════════ -->
+    <body name="pelvis" pos="0 0 0.68" euler="0 0 0" childclass="ff_master">
+      <freejoint name="floating_base_joint"/>
+      <geom class="visual" type="mesh" group="1" density="0" rgba="0.298039 0.298039 0.298039 1" mesh="pelvis"/>
+      <geom class="collision" type="mesh" rgba="0.298039 0.298039 0.298039 1" mesh="pelvis"/>
+      <geom class="visual" pos="0.0239465 -0.000228682 0.04171" type="mesh"
+            group="1" density="0" mesh="imu_in_pelvis_link"/>
+      <site name="imu_0" pos="0.0239465 -0.000228682 0.04171" group="3"/>
+
+      <!-- Left leg -->
+      <body name="left_hip_pitch_link" pos="0 0.07135 0">
+        <inertial pos="0.00791 0.064136 0.000116" quat="0.70601 0.705897 0.0403038 0.0404307"
+                  mass="1.39968" diaginertia="0.00807979 0.007409 0.00155421"/>
+        <joint name="left_hip_pitch_joint" axis="0 1 0" range="-2.704 2.556"/>
+        <geom class="visual"    type="mesh" group="1" density="0" rgba="0.298039 0.298039 0.298039 1" mesh="left_hip_pitch_link"/>
+        <geom class="collision" type="mesh" rgba="0.298039 0.298039 0.298039 1" mesh="left_hip_pitch_link"/>
+        <body name="left_hip_roll_link" pos="-0.000575 0.0657 0">
+          <inertial pos="4.7e-05 0.000231 -0.093505" quat="0.703892 0.00104942 0.00203424 0.710303"
+                    mass="1.5848" diaginertia="0.0181021 0.0176713 0.00251468"/>
+          <joint name="left_hip_roll_joint" axis="1 0 0" range="-0.235 2.906"/>
+          <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="left_hip_roll_link"/>
+          <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="left_hip_roll_link1"/>
+          <body name="left_hip_yaw_link" pos="0.000575 0 -0.13685">
+            <inertial pos="-0.002375 0.003914 -0.144276" quat="0.647266 -0.0202222 0.00175224 0.761994"
+                      mass="2.01055" diaginertia="0.0526993 0.0519961 0.0023845"/>
+            <joint name="left_hip_yaw_joint" axis="0 0 1" range="-1.684 3.43"/>
+            <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="left_hip_yaw_link"/>
+            <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="left_hip_yaw_link"/>
+            <body name="left_knee_link" pos="-0.00766 0.000225 -0.1831">
+              <inertial pos="-0.002655 0.003681 -0.122697" quat="0.437302 -0.00633388 0.00636434 0.89927"
+                        mass="1.56821" diaginertia="0.031041 0.0309424 0.00193262"/>
+              <joint name="left_knee_joint" axis="0 1 0" range="0 2.4073"/>
+              <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="left_knee_link"/>
+              <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="left_knee_link"/>
+              <body name="left_ankle_pitch_link" pos="-0.01 -0.000124911 -0.282">
+                <inertial pos="0.011691 -0.000181 0.003548" quat="0.72346 -0.0457688 0.0674454 0.685537"
+                          mass="0.747802" diaginertia="0.00117429 0.000984841 0.000709871"/>
+                <joint name="left_ankle_pitch_joint" axis="0 1 0" range="-0.803 0.453"/>
+                <geom class="visual" type="mesh" group="1" density="0" rgba="0.298039 0.298039 0.298039 1" mesh="left_ankle_pitch_link"/>
+                <body name="left_ankle_roll_link" pos="-0.00175 0 0">
+                  <inertial pos="0.035428 2.5e-05 -0.049572" quat="0.614657 0.350346 0.350824 0.613496"
+                            mass="1.01617" diaginertia="0.007937 0.0068711 0.0025949"/>
+                  <joint name="left_ankle_roll_joint" axis="1 0 0" range="-0.262 0.262"/>
+                  <geom class="visual" type="mesh" group="1" density="0" rgba="1 0.5 0 1" mesh="left_ankle_roll_link"/>
+                  <geom class="foot" pos="-0.05  0.05 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.065 0.025 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.05 -0.05 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.065 -0.025 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="0.11  0.05 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="0.11 -0.05 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.02 -0.06 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.02  0.06 -0.068" rgba="1 0.5 0 1"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <!-- Right leg -->
+      <body name="right_hip_pitch_link" pos="0 -0.07135 0">
+        <inertial pos="0.007909 -0.064114 0.000131" quat="0.705894 0.706007 -0.0404833 -0.0403565"
+                  mass="1.40023" diaginertia="0.00808102 0.007409 0.00155498"/>
+        <joint name="right_hip_pitch_joint" axis="0 1 0" range="-2.704 2.556"/>
+        <geom class="visual"    type="mesh" group="1" density="0" rgba="0.298039 0.298039 0.298039 1" mesh="right_hip_pitch_link"/>
+        <geom class="collision" type="mesh" rgba="0.298039 0.298039 0.298039 1" mesh="right_hip_pitch_link"/>
+        <body name="right_hip_roll_link" pos="0 -0.0657 0">
+          <inertial pos="-0.000586 -0.000228 -0.093568" quat="0.710476 -8.90189e-06 -0.00101098 0.703721"
+                    mass="1.58508" diaginertia="0.0181161 0.017694 0.00251594"/>
+          <joint name="right_hip_roll_joint" axis="1 0 0" range="-2.906 0.235"/>
+          <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="right_hip_roll_link"/>
+          <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="right_hip_roll_link1"/>
+          <body name="right_hip_yaw_link" pos="0 0 -0.13685">
+            <inertial pos="-0.002444 -0.003935 -0.144335" quat="0.762367 0.00171388 -0.0204012 0.646821"
+                      mass="2.00262" diaginertia="0.0525579 0.0518558 0.0023773"/>
+            <joint name="right_hip_yaw_joint" axis="0 0 1" range="-3.43 1.684"/>
+            <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="right_hip_yaw_link"/>
+            <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="right_hip_yaw_link"/>
+            <body name="right_knee_link" pos="-0.00766 -0.000225 -0.1831">
+              <inertial pos="-0.002699 -0.003794 -0.122288" quat="0.90334 0.0065752 -0.00663139 0.428824"
+                        mass="1.56588" diaginertia="0.0308703 0.0307718 0.00192491"/>
+              <joint name="right_knee_joint" axis="0 1 0" range="0 2.4073"/>
+              <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="right_knee_link"/>
+              <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="right_knee_link"/>
+              <body name="right_ankle_pitch_link" pos="-0.01 0.000124911 -0.282">
+                <inertial pos="0.011665 0.000937 0.00394" quat="0.7183 0.0624712 -0.034146 0.692081"
+                          mass="0.749566" diaginertia="0.00122381 0.00103716 0.000713034"/>
+                <joint name="right_ankle_pitch_joint" axis="0 1 0" range="-0.803 0.453"/>
+                <geom class="visual" type="mesh" group="1" density="0" rgba="0.298039 0.298039 0.298039 1" mesh="right_ankle_pitch_link"/>
+                <body name="right_ankle_roll_link" pos="-0.00175 0 0">
+                  <inertial pos="0.035428 2.5e-05 -0.049572" quat="0.614657 0.350346 0.350824 0.613496"
+                            mass="1.01617" diaginertia="0.007937 0.0068711 0.0025949"/>
+                  <joint name="right_ankle_roll_joint" axis="1 0 0" range="-0.2625 0.2625"/>
+                  <geom class="visual" type="mesh" group="1" density="0" rgba="1 0.5 0 1" mesh="right_ankle_roll_link"/>
+                  <geom class="foot" pos="-0.05  0.05 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.065 0.025 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.05 -0.05 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.065 -0.025 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="0.11  0.05 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="0.11 -0.05 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.02 -0.06 -0.068" rgba="1 0.5 0 1"/>
+                  <geom class="foot" pos="-0.02  0.06 -0.068" rgba="1 0.5 0 1"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <!-- Waist + torso -->
+      <body name="waist_yaw_link" pos="0 0 0.06706">
+        <inertial pos="-0.001359 4.7e-05 0.041703" quat="0.99876 0.000921559 0.0477625 0.0140034"
+                  mass="1.66854" diaginertia="0.00503206 0.00499998 0.00283196"/>
+        <joint name="waist_yaw_joint" axis="0 0 1" range="-3.43 2.382"/>
+        <geom class="visual" type="mesh" group="1" density="0" rgba="0.298039 0.298039 0.298039 1" mesh="waist_yaw_link"/>
+        <body name="waist_pitch_link" pos="0 0 0.0880106">
+          <inertial pos="0.008967 -1e-06 0" quat="0.5 0.5 -0.5 0.5"
+                    mass="0.392413" diaginertia="0.00023 0.000133 0.000133"/>
+          <joint name="waist_pitch_joint" axis="0 1 0" range="-0.314 0.314"/>
+          <geom class="visual" type="mesh" group="1" density="0" rgba="0.298039 0.298039 0.298039 1" mesh="waist_pitch_link"/>
+          <body name="torso_link">
+            <inertial pos="-0.00574 0.000528 0.196696" quat="0.999706 0.00109241 0.0238883 0.0040423"
+                      mass="9.46465" diaginertia="0.47304 0.45047 0.0654253"/>
+            <joint name="waist_roll_joint" axis="1 0 0" range="-0.488 0.488"/>
+            <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="torso_link"/>
+            <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="torso_link"/>
+
+            <!-- Head -->
+            <body name="head_yaw_link" pos="0.00834773 0 0.309397">
+              <inertial pos="-0.003139 0.001399 0.051838" quat="0.999924 -0.00911422 0.00384341 0.00741605"
+                        mass="0.720047" diaginertia="0.0038613 0.00323157 0.00110213"/>
+              <joint name="head_yaw_joint" axis="0 0 1" range="-0.366 0.366"/>
+              <geom class="visual" type="mesh" group="1" density="0" rgba="0.866667 0.866667 0.890196 1" mesh="head_yaw_link"/>
+              <body name="head_pitch_link" pos="0 0 0.0889">
+                <inertial pos="0.00524526 -8.20014e-05 0.00611044" quat="0.70726 -0.100583 -0.0842853 0.694667"
+                          mass="1.05468" diaginertia="0.0038299 0.00304687 0.00282101"/>
+                <joint name="head_pitch_joint" axis="0 1 0" range="-0.3838 0.3838"/>
+                <geom class="visual" type="mesh" group="1" density="0" rgba="0.498039 0.498039 0.498039 1" mesh="head_pitch_link"/>
+                <geom class="collision" size="0.074 0.05" pos="0 0 0.015" quat="0.499898 0.5 0.5 -0.500102"
+                      type="cylinder" rgba="0.498039 0.498039 0.498039 1"/>
+                <geom class="visual" pos="0.0259999 -8.25389e-05 0.0176" type="mesh"
+                      group="1" density="0" rgba="0.647059 0.619608 0.588235 1" mesh="imu_in_head_link"/>
+                <site name="imu_3" pos="0.0259999 -8.25389e-05 0.0176" group="3"/>
+                <geom class="visual" pos="0.0576096 -0.0111832 -0.0483697"
+                      quat="0.298835 0.640857 0.640857 0.298835" type="mesh"
+                      group="1" density="0" rgba="0.647059 0.619608 0.588235 1" mesh="rgbd_head_front_link"/>
+              </body>
+            </body>
+
+            <!-- Left arm (passive – fist mesh at end) -->
+            <body name="left_shoulder_pitch_link" pos="0.00329907 0.143032 0.241648" quat="0.994522 0.104528 0 0">
+              <inertial pos="0.003007 0.050014 6.2e-05" quat="0.707145 0.706403 0.027325 0.0139105"
+                        mass="0.885896" diaginertia="0.00303104 0.00292896 0.000676999"/>
+              <joint name="left_shoulder_pitch_joint" axis="0 1 0" range="-3.08 2.04"/>
+              <geom class="visual" type="mesh" group="1" density="0" rgba="0.298039 0.298039 0.298039 1" mesh="left_shoulder_pitch_link"/>
+              <body name="left_shoulder_roll_link" pos="-0.000499991 0.0495 0">
+                <inertial pos="0.000621 -0.000183 -0.078842" quat="0.706401 0.00587444 0.00386922 0.707777"
+                          mass="0.706556" diaginertia="0.00549904 0.00540092 0.000539037"/>
+                <joint name="left_shoulder_roll_joint" axis="1 0 0" range="-0.061 2.993"/>
+                <geom class="visual" type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="left_shoulder_roll_link"/>
+                <body name="left_shoulder_yaw_link" pos="0.00122424 0 -0.121195" quat="0.999996 0 -0.00298782 0">
+                  <inertial pos="0.010005 0.000179 -0.069477" quat="0.996444 0.00144278 0.0782236 0.0312643"
+                            mass="0.704662" diaginertia="0.00438693 0.00436694 0.00044713"/>
+                  <joint name="left_shoulder_yaw_joint" axis="0 0 1" range="-2.556 2.556"/>
+                  <geom class="visual" type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="left_shoulder_yaw_link"/>
+                  <body name="left_elbow_link" pos="0.014 0.000199986 -0.08295" quat="0.999996 0 0.00298782 0">
+                    <inertial pos="-0.013174 0.003788 -0.080203" quat="0.970867 0.0083727 -0.0764035 -0.226955"
+                              mass="0.688008" diaginertia="0.0054008 0.00531735 0.000446844"/>
+                    <joint name="left_elbow_joint" axis="0 1 0" range="-2.3556 0"/>
+                    <geom class="visual" type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="left_elbow_link"/>
+                    <body name="left_wrist_yaw_link" pos="-0.01328 -9.7549e-05 -0.12058">
+                      <inertial pos="0.003072 -0.000934 -0.117784" quat="0.546644 0.0145913 0.00419079 0.837228"
+                                mass="0.525614" diaginertia="0.0100411 0.00995279 0.000391153"/>
+                      <joint name="left_wrist_yaw_joint" axis="0 0 -1" range="-2.556 2.556"/>
+                      <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="left_wrist_fist_link"/>
+                      <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="left_wrist_fist_link"/>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+
+            <!-- ═══════════════════════════════════════════════════════
+                 RIGHT ARM — controlled, grips the knife
+                 ═══════════════════════════════════════════════════════ -->
+            <body name="right_shoulder_pitch_link" pos="0.00330094 -0.143031 0.241648" quat="0.994522 -0.10453 0 0">
+              <inertial pos="0.002721 -0.050304 3.4e-05" quat="0.706743 0.706967 -0.0144448 -0.0224265"
+                        mass="0.885544" diaginertia="0.00303743 0.00294899 0.00067458"/>
+              <joint name="right_shoulder_pitch_joint" axis="0 1 0" range="-3.08 2.04"/>
+              <geom class="visual"    type="mesh" group="1" density="0" rgba="0.298039 0.298039 0.298039 1" mesh="right_shoulder_pitch_link"/>
+              <geom class="collision" type="mesh" rgba="0.298039 0.298039 0.298039 1" mesh="right_shoulder_pitch_link"/>
+              <body name="right_shoulder_roll_link" pos="-0.0005 -0.0495 0">
+                <inertial pos="0.000598 0.000185 -0.079928" quat="0.707532 0.00175816 0.00375761 0.706669"
+                          mass="0.696963" diaginertia="0.00548904 0.0054003 0.000529664"/>
+                <joint name="right_shoulder_roll_joint" axis="1 0 0" range="-2.993 0.061"/>
+                <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="right_shoulder_roll_link"/>
+                <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="right_shoulder_roll_link"/>
+                <body name="right_shoulder_yaw_link" pos="0.0005 0 -0.1212">
+                  <inertial pos="0.010082 -0.000178 -0.069484" quat="0.996531 -0.00117604 0.0784297 -0.0277917"
+                            mass="0.704661" diaginertia="0.00438849 0.00436595 0.000445562"/>
+                  <joint name="right_shoulder_yaw_joint" axis="0 0 1" range="-2.556 2.556"/>
+                  <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="right_shoulder_yaw_link"/>
+                  <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="right_shoulder_yaw_link"/>
+                  <body name="right_elbow_link" pos="0.014 -0.0002 -0.08295">
+                    <inertial pos="-0.013517 -0.003463 -0.080438" quat="0.973224 -0.00938144 -0.0782816 0.215913"
+                              mass="0.687932" diaginertia="0.00542019 0.00534355 0.000444255"/>
+                    <joint name="right_elbow_joint" axis="0 1 0" range="-2.3556 0"/>
+                    <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="right_elbow_link"/>
+                    <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="right_elbow_link"/>
+                    <body name="right_wrist_yaw_link" pos="-0.014 9.75261e-05 -0.120694">
+                      <inertial pos="0.002428 0.000868 -0.116517" quat="0.831914 0.00273589 0.0121936 0.554764"
+                                mass="0.525681" diaginertia="0.0100177 0.00993029 0.000391016"/>
+                      <joint name="right_wrist_yaw_joint" axis="0 0 1" range="-2.556 2.556"/>
+                      <!-- Fist mesh visual + collision -->
+                      <geom class="visual"    type="mesh" group="1" density="0" rgba="1 1 1 1" mesh="right_wrist_fist_link"/>
+                      <geom class="collision" type="mesh" rgba="1 1 1 1" mesh="right_wrist_fist_link"/>
+
+                      <!--
+                        GRASP FRAME — palm coordinate system.
+
+                        Three-layer relationship (hand grips knife, not knife follows hand):
+                          1. grasp_frame: palm centre in wrist space.
+                             pos (0, 0.012, −0.0625): 12 mm palmar (+y), 62.5 mm distal (−z)
+                             to place the origin at the mid-point of the grip zone.
+                             Rx(0.06 rad ≈ 3.4°): natural wrist-to-handle inclination —
+                             handle axis deviates slightly from forearm centreline.
+                          2. Fingers: defined in grasp_frame (palm-centre coords), so they
+                             express "fingers wrap around a fixed handle volume."
+                          3. knife_body: child of grasp_frame, pos z=+0.0625 shifts the
+                             knife so its grip mid-point sits at the palm centre (z=0).
+                             Rz(π) orients the blade edge (刀刃) to face the WM.
+
+                        The Rx(0.06) tilt is small enough that blade_geom COM shift
+                        (~8 mm in y) is resisted by the strengthened waist actuators
+                        (kp=2000) without affecting the 4/4 cut trajectory.
+                      -->
+                      <body name="grasp_frame" pos="0 0.012 -0.0625" euler="0.06 0 0">
+
+                        <!--
+                          Finger layout (all in grasp_frame, euler in RADIANS, eulerseq XYZ):
+                            Handle runs along grasp_frame Z: from z≈-0.04 to z≈+0.04.
+                            +Y = palmar (away from forearm); -Y = dorsal.
+                            euler Rx(-1.5) rotates capsule long-axis toward +Y  (4 fingers side).
+                            euler Rx(+1.5) rotates capsule long-axis toward -Y  (thumb side).
+                            Rz component fans each finger in X: index at +x, pinky at -x.
+                            Each capsule straddles y=0 (handle centre) so both sides of
+                            the grip are filled with skin geometry.
+                        -->
+                        <!-- Palm pad: static, no DOF -->
+                        <geom name="f_palm" type="box" size="0.022 0.005 0.019"
+                              pos="0 0.028 0"
+                              material="skin_mat" mass="0" contype="0" conaffinity="0"/>
+
+                        <!--
+                          Active fingers — 3 hinge DOF each (MCP + PIP + DIP joints).
+                          Prox body at knuckle (y=0), mid at tip of prox phalanx,
+                          dist at tip of mid phalanx.
+                          axis="1 0 0": 0 = gripped, positive = open (4 fingers);
+                                        0 = gripped, negative = open (thumb).
+                          MCP range ~1.0 rad; PIP range ~0.6–0.7 rad; DIP range ~0.4–0.5 rad.
+                        -->
+                        <!-- Index: 3-joint (MCP + PIP + DIP) -->
+                        <body name="finger_index_prox" pos="0.016 0 -0.015">
+                          <joint name="j_mcp_index" type="hinge" axis="1 0 0"
+                                 range="0 1.0" damping="0.04" armature="0.0004" frictionloss="0"/>
+                          <geom name="f_index_prox" type="capsule" size="0.0065 0.0120"
+                                pos="0 0.010 0" euler="-1.45 0 0.28"
+                                material="skin_mat" mass="0.003" contype="2" conaffinity="2"/>
+                          <site name="gh_index" pos="0 0 0" size="0.005" rgba="0.8 0.5 0.2 0"/>
+                          <body name="finger_index_mid" pos="0 0.020 0">
+                            <joint name="j_pip_index" type="hinge" axis="1 0 0"
+                                   range="0 0.7" damping="0.03" armature="0.0003" frictionloss="0"/>
+                            <geom name="f_index_mid" type="capsule" size="0.0050 0.0070"
+                                  pos="0 0.006 0" euler="-1.45 0 0.28"
+                                  material="skin_mat" mass="0.002" contype="2" conaffinity="2"/>
+                            <body name="finger_index_dist" pos="0 0.012 0">
+                              <joint name="j_dip_index" type="hinge" axis="1 0 0"
+                                     range="0 0.5" damping="0.05" armature="0.001" frictionloss="0"/>
+                              <geom name="f_index_dist" type="capsule" size="0.0045 0.0050"
+                                    pos="0 0.004 0" euler="-1.45 0 0.28"
+                                    material="skin_mat" mass="0.001" contype="2" conaffinity="2"/>
+                              <site name="ft_index" pos="0 0.014 0" size="0.005" rgba="0.2 1 0.2 0"/>
+                            </body>
+                          </body>
+                        </body>
+                        <!-- Middle: 3-joint (MCP + PIP + DIP) -->
+                        <body name="finger_middle_prox" pos="0.004 0 -0.007">
+                          <joint name="j_mcp_middle" type="hinge" axis="1 0 0"
+                                 range="0 1.0" damping="0.04" armature="0.0004" frictionloss="0"/>
+                          <geom name="f_middle_prox" type="capsule" size="0.0070 0.0130"
+                                pos="0 0.012 0" euler="-1.50 0 0.05"
+                                material="skin_mat" mass="0.004" contype="2" conaffinity="2"/>
+                          <site name="gh_middle" pos="0 0 0" size="0.005" rgba="0.8 0.5 0.2 0"/>
+                          <body name="finger_middle_mid" pos="0 0.024 0">
+                            <joint name="j_pip_middle" type="hinge" axis="1 0 0"
+                                   range="0 0.7" damping="0.03" armature="0.0003" frictionloss="0"/>
+                            <geom name="f_middle_mid" type="capsule" size="0.0055 0.0090"
+                                  pos="0 0.008 0" euler="-1.50 0 0.05"
+                                  material="skin_mat" mass="0.003" contype="2" conaffinity="2"/>
+                            <body name="finger_middle_dist" pos="0 0.016 0">
+                              <joint name="j_dip_middle" type="hinge" axis="1 0 0"
+                                     range="0 0.5" damping="0.05" armature="0.001" frictionloss="0"/>
+                              <geom name="f_middle_dist" type="capsule" size="0.0050 0.0060"
+                                    pos="0 0.005 0" euler="-1.50 0 0.05"
+                                    material="skin_mat" mass="0.001" contype="2" conaffinity="2"/>
+                              <site name="ft_middle" pos="0 0.016 0" size="0.005" rgba="0.2 1 0.2 0"/>
+                            </body>
+                          </body>
+                        </body>
+                        <!-- Ring: 3-joint (MCP + PIP + DIP) -->
+                        <body name="finger_ring_prox" pos="-0.009 0 -0.002">
+                          <joint name="j_mcp_ring" type="hinge" axis="1 0 0"
+                                 range="0 1.0" damping="0.04" armature="0.0004" frictionloss="0"/>
+                          <geom name="f_ring_prox" type="capsule" size="0.0065 0.0120"
+                                pos="0 0.010 0" euler="-1.48 0 -0.12"
+                                material="skin_mat" mass="0.003" contype="2" conaffinity="2"/>
+                          <site name="gh_ring" pos="0 0 0" size="0.005" rgba="0.8 0.5 0.2 0"/>
+                          <body name="finger_ring_mid" pos="0 0.020 0">
+                            <joint name="j_pip_ring" type="hinge" axis="1 0 0"
+                                   range="0 0.7" damping="0.03" armature="0.0003" frictionloss="0"/>
+                            <geom name="f_ring_mid" type="capsule" size="0.0050 0.0070"
+                                  pos="0 0.006 0" euler="-1.48 0 -0.12"
+                                  material="skin_mat" mass="0.002" contype="2" conaffinity="2"/>
+                            <body name="finger_ring_dist" pos="0 0.012 0">
+                              <joint name="j_dip_ring" type="hinge" axis="1 0 0"
+                                     range="0 0.5" damping="0.05" armature="0.001" frictionloss="0"/>
+                              <geom name="f_ring_dist" type="capsule" size="0.0045 0.0050"
+                                    pos="0 0.004 0" euler="-1.48 0 -0.12"
+                                    material="skin_mat" mass="0.001" contype="2" conaffinity="2"/>
+                              <site name="ft_ring" pos="0 0.013 0" size="0.005" rgba="0.2 1 0.2 0"/>
+                            </body>
+                          </body>
+                        </body>
+                        <!-- Pinky: 3-joint (MCP + PIP + DIP) -->
+                        <body name="finger_pinky_prox" pos="-0.021 0 0.007">
+                          <joint name="j_mcp_pinky" type="hinge" axis="1 0 0"
+                                 range="0 1.0" damping="0.04" armature="0.0004" frictionloss="0"/>
+                          <geom name="f_pinky_prox" type="capsule" size="0.0055 0.0100"
+                                pos="0 0.008 0" euler="-1.42 0 -0.28"
+                                material="skin_mat" mass="0.002" contype="2" conaffinity="2"/>
+                          <site name="gh_pinky" pos="0 0 0" size="0.005" rgba="0.8 0.5 0.2 0"/>
+                          <body name="finger_pinky_mid" pos="0 0.016 0">
+                            <joint name="j_pip_pinky" type="hinge" axis="1 0 0"
+                                   range="0 0.6" damping="0.02" armature="0.0002" frictionloss="0"/>
+                            <geom name="f_pinky_mid" type="capsule" size="0.0040 0.0060"
+                                  pos="0 0.005 0" euler="-1.42 0 -0.28"
+                                  material="skin_mat" mass="0.001" contype="2" conaffinity="2"/>
+                            <body name="finger_pinky_dist" pos="0 0.010 0">
+                              <joint name="j_dip_pinky" type="hinge" axis="1 0 0"
+                                     range="0 0.4" damping="0.04" armature="0.0008" frictionloss="0"/>
+                              <geom name="f_pinky_dist" type="capsule" size="0.0035 0.0040"
+                                    pos="0 0.003 0" euler="-1.42 0 -0.28"
+                                    material="skin_mat" mass="0.001" contype="2" conaffinity="2"/>
+                              <site name="ft_pinky" pos="0 0.011 0" size="0.005" rgba="0.2 1 0.2 0"/>
+                            </body>
+                          </body>
+                        </body>
+                        <!-- Thumb: 3-joint (MCP + IP + DIP), opposing side (-Y) -->
+                        <body name="finger_thumb_prox" pos="0.010 0 0.000">
+                          <joint name="j_mcp_thumb" type="hinge" axis="1 0 0"
+                                 range="-1.0 0" damping="0.05" armature="0.0005" frictionloss="0"/>
+                          <geom name="f_thumb_prox" type="capsule" size="0.0085 0.0130"
+                                pos="0 -0.012 0" euler="1.48 0 0.20"
+                                material="skin_mat" mass="0.004" contype="2" conaffinity="2"/>
+                          <site name="gh_thumb" pos="0 0 0" size="0.005" rgba="0.8 0.5 0.2 0"/>
+                          <body name="finger_thumb_mid" pos="0 -0.024 0">
+                            <joint name="j_ip_thumb" type="hinge" axis="1 0 0"
+                                   range="-0.7 0" damping="0.04" armature="0.0004" frictionloss="0"/>
+                            <geom name="f_thumb_mid" type="capsule" size="0.0065 0.0090"
+                                  pos="0 -0.008 0" euler="1.48 0 0.20"
+                                  material="skin_mat" mass="0.003" contype="2" conaffinity="2"/>
+                            <body name="finger_thumb_dist" pos="0 -0.016 0">
+                              <joint name="j_dip_thumb" type="hinge" axis="1 0 0"
+                                     range="-0.5 0" damping="0.05" armature="0.001" frictionloss="0"/>
+                              <geom name="f_thumb_dist" type="capsule" size="0.0055 0.0060"
+                                    pos="0 -0.005 0" euler="1.48 0 0.20"
+                                    material="skin_mat" mass="0.002" contype="2" conaffinity="2"/>
+                              <site name="ft_thumb" pos="0 -0.018 0" size="0.005" rgba="0.2 1 0.2 0"/>
+                            </body>
+                          </body>
+                        </body>
+
+                        <!-- knife_body: handle grip mid-point at grasp_frame origin.
+                             pos z=+0.0625 shifts knife so grip centre (z=−0.0625 in knife)
+                             lands at z=0 in grasp_frame (= palm centre).
+                             knife_slide_z: 1-DOF axial compliance (±8 mm toward blade /
+                             ±3 mm toward guard).  Finger friction resists slip; stiffness=200
+                             N/m returns knife to neutral after retract.  If grip torque from
+                             5 fingers (kp=6 × contact) ≥ blade load, knife stays at 0 slip. -->
+                        <!-- Rz(+90°) about the handle axis: the cutting edge
+                             (+x face) rotates to +y = palmar so the edge leads
+                             when the arm presses down. Handle is a cylinder →
+                             grip geometry unchanged. -->
+                        <body name="knife_body" pos="0 0 0.0625" euler="0 0 1.5708">
+                          <joint name="knife_slide_z" type="slide" axis="0 0 1"
+                                 range="-0.015 0.015" damping="800" stiffness="30000"/>
+                          <!-- handle (wood, 75 mm grip zone: z=−0.025 to −0.100)
+                               contype=2: collides with finger geoms (type 2); not with WM (type 1). -->
+                          <geom name="knife_handle" type="cylinder"
+                                fromto="0 0 -0.025   0 0 -0.100"
+                                size="0.015"
+                                material="handle_mat"
+                                friction="1.5 0.02 0.001"
+                                mass="0" contype="2" conaffinity="2"/>
+                          <!-- guard (metal crossguard) — also collidable (type 2) to prevent
+                               fingers from slipping past the heel of the knife. -->
+                          <geom name="knife_guard" type="box"
+                                size="0.020 0.055 0.004"
+                                pos="0 0 -0.104"
+                                material="metal"
+                                mass="0" contype="2" conaffinity="2"/>
+                          <!-- blade collision geom: thin in x (6mm), wide in y (9cm), long in z (18cm) -->
+                          <geom name="blade_geom" type="box"
+                                size="0.003 0.045 0.090"
+                                pos="0 0 -0.194"
+                                material="blade_mat"
+                                mass="0.18"/>
+                          <!-- blade_spine (刀背): darker ridge on −x side -->
+                          <geom name="blade_spine" type="box"
+                                size="0.0006 0.041 0.090"
+                                pos="-0.0038 0 -0.194"
+                                rgba="0.38 0.38 0.44 1"
+                                mass="0" contype="0" conaffinity="0"/>
+                          <!-- blade_edge_vis (刀刃): bright highlight on +x side (leads into WM) -->
+                          <geom name="blade_edge_vis" type="box"
+                                size="0.0003 0.041 0.090"
+                                pos="0.0035 0 -0.194"
+                                rgba="0.92 0.95 1.0 1"
+                                mass="0" contype="0" conaffinity="0"/>
+                          <!-- blade_edge_trigger: ultra-thin sensor geom on the +x (edge) face.
+                               With euler="0 0 0" the edge faces +grasp_frame x → toward WM.
+                               mass=0 so no inertial effect; cut_trigger_robot detects this
+                               geom (not blade_geom) so the cut only fires edge-first. -->
+                          <geom name="blade_edge_trigger" type="box"
+                                size="0.0003 0.043 0.088"
+                                pos="0.0030 0 -0.194"
+                                rgba="0 0 0 0"
+                                mass="0"/>
+                          <!-- blade_tip site for kinematic sensors (vel/accel/gyro/pose) -->
+                          <site name="blade_tip" pos="0 0 -0.286" size="0.005" rgba="1 0.3 0.2 0"/>
+                          <!-- blade_edge_zone: touch-sensor volume covering the whole
+                               cutting edge (hammer grip: contact happens mid-edge,
+                               far from the tip site). -->
+                          <site name="blade_edge_zone" type="box" size="0.008 0.050 0.098"
+                                pos="0.002 0 -0.194" rgba="0 0 0 0"/>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body><!-- /pelvis -->
+
+    <!-- Cutting board — on table under the watermelon -->
+    <body name="cutting_board" pos="0.44 -0.29 0.553">
+      <geom name="board_top" type="box" size="0.130 0.160 0.006"
+            rgba="0.68 0.47 0.24 1" mass="0" contype="0" conaffinity="0"/>
+      <geom name="board_groove1" type="box" size="0.120 0.001 0.0005" pos="0 -0.05 0.006"
+            rgba="0.55 0.35 0.14 1" mass="0" contype="0" conaffinity="0"/>
+      <geom name="board_groove2" type="box" size="0.120 0.001 0.0005" pos="0  0.00 0.006"
+            rgba="0.55 0.35 0.14 1" mass="0" contype="0" conaffinity="0"/>
+      <geom name="board_groove3" type="box" size="0.120 0.001 0.0005" pos="0  0.05 0.006"
+            rgba="0.55 0.35 0.14 1" mass="0" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- Serving plate: rests on Futurist's upturned left palm.
+         Waiter hold [sr=1.60, sy=0.80, el=−1.50, ro=−1.60] puts the wrist at
+         (0.748,−0.302,1.062) with palm facing up, fingers toward (−0.69,0.72,0).
+         Plate center = palm surface, slightly toward the fingers. -->
+    <body name="serving_plate" pos="0.650 -0.300 1.125">
+      <geom name="plate_disc" type="cylinder" size="0.138 0.004"
+            rgba="0.97 0.96 0.90 1" mass="0" contype="0" conaffinity="0"/>
+      <!-- Collision slab: thick enough that a physically DROPPED wedge
+           (friction-mode landing) cannot tunnel through the thin visual
+           disc; its top face coincides with the visual plate top. -->
+      <geom name="plate_col" type="cylinder" size="0.138 0.014" pos="0 0 -0.010"
+            rgba="0 0 0 0" mass="0" contype="2" conaffinity="2"
+            solref="0.008 1.0" friction="1.0 0.01 0.003"/>
+      <geom name="plate_rim" type="cylinder" size="0.148 0.002" pos="0 0 0.004"
+            rgba="0.80 0.76 0.70 1" mass="0" contype="0" conaffinity="0"/>
+      <geom name="plate_shadow" type="cylinder" size="0.152 0.001" pos="0 0 -0.001"
+            rgba="0.65 0.60 0.55 0.6" mass="0" contype="0" conaffinity="0"/>
+      <!-- Garnish: lime wedge + second wedge + mint sprig -->
+      <geom name="garnish_lime" type="cylinder" size="0.018 0.006" pos="0.08 0.03 0.008"
+            euler="0 1.5708 0" rgba="0.22 0.72 0.18 1" mass="0" contype="0" conaffinity="0"/>
+      <geom name="garnish_lime2" type="cylinder" size="0.014 0.005" pos="0.07 -0.06 0.007"
+            euler="0 1.5708 0.35" rgba="0.22 0.72 0.18 1" mass="0" contype="0" conaffinity="0"/>
+      <geom name="garnish_mint" type="ellipsoid" size="0.022 0.010 0.003" pos="-0.07 0.05 0.008"
+            euler="0.2 0 0.55" rgba="0.15 0.68 0.12 1" mass="0" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         WATERMELON — same geometry/logic as original PrecisionCutBench
+         Centre at (0.28, -0.30, 0.64) — right under the right arm swing arc
+         ═══════════════════════════════════════════════════════════════ -->
+    <body name="watermelon" pos="0.44 -0.30 0.64">
+      <freejoint name="wm_free"/>
+      <site name="wm_center" pos="0 0 0" size="0.003" rgba="0 0 0 0"/>
+      <!-- Collision geom: invisible, physics only.  CutTrigger detects blade↔wm_whole contact. -->
+      <geom name="wm_whole" type="ellipsoid" size="0.12 0.09 0.09"
+            rgba="0 0 0 0" mass="1.5"/>
+      <!-- Visual skin: striped material, no physics.  Hidden on cut by CutTrigger. -->
+      <geom name="wm_vis" type="ellipsoid" size="0.120 0.090 0.090"
+            material="wm_skin_mat" mass="0" contype="0" conaffinity="0"/>
+      <!-- Stem at +x pole — hidden on cut -->
+      <geom name="wm_stem" type="capsule" size="0.005 0.012" pos="0.131 0 0"
+            rgba="0.16 0.26 0.04 1" mass="0" contype="0" conaffinity="0"/>
+      <!-- Progressive cut-plane cross-sections (blade penetration visualisation).
+           4 depth layers at local Z = 0.070, 0.045, 0.020, 0.000.
+           Each layer: green-rind ellipsoid (full cross-section) + red-flesh ellipsoid (70%).
+           Radii match the WM ellipsoid cross-section at each Z:
+             Z=0.070 → a_x=0.076, a_y=0.057 (sqrt factor 0.629)
+             Z=0.045 → a_x=0.104, a_y=0.078 (sqrt factor 0.866)
+             Z=0.020 → a_x=0.117, a_y=0.088 (sqrt factor 0.975)
+             Z=0.000 → a_x=0.120, a_y=0.090 (equator)
+           All start alpha=0; faded in by update_blade_penetration() during CONTACT/SLICE. -->
+      <geom name="wm_cut_plane0_skin" type="ellipsoid" size="0.076 0.057 0.004"
+            pos="0 0 0.070" rgba="0.12 0.55 0.08 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_cut_plane0_flesh" type="ellipsoid" size="0.053 0.040 0.005"
+            pos="0 0 0.071" rgba="0.90 0.10 0.10 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_cut_plane1_skin" type="ellipsoid" size="0.104 0.078 0.004"
+            pos="0 0 0.045" rgba="0.12 0.55 0.08 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_cut_plane1_flesh" type="ellipsoid" size="0.073 0.055 0.005"
+            pos="0 0 0.046" rgba="0.90 0.10 0.10 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_cut_plane2_skin" type="ellipsoid" size="0.117 0.088 0.004"
+            pos="0 0 0.020" rgba="0.12 0.55 0.08 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_cut_plane2_flesh" type="ellipsoid" size="0.082 0.061 0.005"
+            pos="0 0 0.021" rgba="0.90 0.10 0.10 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_cut_plane3_skin" type="ellipsoid" size="0.120 0.090 0.004"
+            pos="0 0 0.000" rgba="0.12 0.55 0.08 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_cut_plane3_flesh" type="ellipsoid" size="0.084 0.063 0.005"
+            pos="0 0 0.001" rgba="0.90 0.10 0.10 0" mass="0" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- Left half (parked high, revealed on cut) -->
+    <body name="wm_half_L" pos="0.01 -0.30 100.0">
+      <freejoint name="wm_L_free"/>
+      <site name="left_center" pos="0 0 0" size="0.003" rgba="0 0 0 0"/>
+      <!-- Collision sphere — physics only, invisible -->
+      <geom name="wm_left_col" type="sphere" size="0.09"
+            mass="0.75" friction="0.90 0.08 0.03"
+            solref="0.04 1.4" solimp="0.8 0.95 0.001 0.5 2" rgba="0 0 0 0"/>
+      <!-- Exterior dome skin (visual-only, stripe texture) -->
+      <geom name="wm_left" type="ellipsoid" size="0.060 0.090 0.090"
+            material="wm_skin_mat" rgba="1 1 1 0" mass="0" contype="0" conaffinity="0"/>
+      <!--
+        Cut-face cross-section — 4 anatomical layers.
+        All cylinders: euler="0 1.5708 0" (Ry π/2) makes the flat disc face +X.
+        Layers are stacked in X front-to-back so each ring peeks behind the one
+        in front, creating visual depth:
+          Green outer ring   (r 90 mm → full disc)
+          White pith ring    (r 83 mm → green ring 83–90 mm exposed)
+          Red flesh          (r 70 mm → pith ring 70–83 mm exposed)
+          Core / placenta    (r 33 mm → flesh ring 33–70 mm exposed)
+        Seeds cluster in the flesh/core zone, not on the rind periphery.
+      -->
+      <geom name="wm_left_green" type="cylinder" size="0.090 0.003"
+            pos="0.050 0 0" euler="0 1.5708 0"
+            rgba="0.10 0.42 0.08 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_pith" type="cylinder" size="0.083 0.004"
+            pos="0.053 0 0" euler="0 1.5708 0"
+            rgba="0.94 0.91 0.82 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_face" type="cylinder" size="0.070 0.006"
+            pos="0.057 0 0" euler="0 1.5708 0"
+            rgba="0.88 0.10 0.10 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_core" type="cylinder" size="0.033 0.004"
+            pos="0.061 0 0" euler="0 1.5708 0"
+            rgba="0.96 0.44 0.34 0" mass="0" contype="0" conaffinity="0"/>
+      <!-- 7 seeds — clustered in flesh/core zone, varied size and tilt -->
+      <geom name="wm_left_seed1" type="ellipsoid" size="0.003 0.011 0.006"
+            pos="0.063  0.028  0.038" euler="0  0.30  0.80" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_seed2" type="ellipsoid" size="0.003 0.010 0.006"
+            pos="0.063 -0.032  0.025" euler="0 -0.25 -0.60" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_seed3" type="ellipsoid" size="0.003 0.011 0.006"
+            pos="0.063  0.048 -0.018" euler="0  0.20 -0.50" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_seed4" type="ellipsoid" size="0.003 0.010 0.006"
+            pos="0.063 -0.012 -0.048" euler="0 -0.35  0.70" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_seed5" type="ellipsoid" size="0.003 0.011 0.005"
+            pos="0.063  0.018  0.056" euler="0  0.15  0.30" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_seed6" type="ellipsoid" size="0.003 0.009 0.005"
+            pos="0.063 -0.042 -0.012" euler="0 -0.20  0.55" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_seed7" type="ellipsoid" size="0.003 0.010 0.005"
+            pos="0.063  0.008 -0.030" euler="0  0.25 -0.40" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <!-- Juice spray (CUT1) — outside the 0.09m collision sphere, near cut face (+X) -->
+      <geom name="wm_left_juice1" type="sphere" size="0.020" pos=" 0.080  0.068 -0.020" rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_juice2" type="sphere" size="0.016" pos=" 0.070 -0.072  0.025" rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_juice3" type="sphere" size="0.013" pos=" 0.058  0.082  0.038" rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_left_juice4" type="sphere" size="0.010" pos=" 0.090 -0.048 -0.038" rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- Right half (parked high, revealed on cut) -->
+    <body name="wm_half_R" pos="0.15 -0.30 100.0">
+      <freejoint name="wm_R_free"/>
+      <site name="right_center" pos="0 0 0" size="0.003" rgba="0 0 0 0"/>
+      <!-- Collision sphere — physics only, invisible -->
+      <geom name="wm_right_col" type="sphere" size="0.09"
+            mass="0.75" friction="0.90 0.08 0.03"
+            solref="0.04 1.4" solimp="0.8 0.95 0.001 0.5 2" rgba="0 0 0 0"/>
+      <!-- Exterior dome skin (visual-only, stripe texture) -->
+      <geom name="wm_right" type="ellipsoid" size="0.060 0.090 0.090"
+            material="wm_skin_mat" rgba="1 1 1 0" mass="0" contype="0" conaffinity="0"/>
+      <!-- 4-layer cut face (mirror of left: x positions negated) -->
+      <geom name="wm_right_green" type="cylinder" size="0.090 0.003"
+            pos="-0.050 0 0" euler="0 1.5708 0"
+            rgba="0.10 0.42 0.08 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_right_pith" type="cylinder" size="0.083 0.004"
+            pos="-0.053 0 0" euler="0 1.5708 0"
+            rgba="0.94 0.91 0.82 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_right_face" type="cylinder" size="0.070 0.006"
+            pos="-0.057 0 0" euler="0 1.5708 0"
+            rgba="0.88 0.10 0.10 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_right_core" type="cylinder" size="0.033 0.004"
+            pos="-0.061 0 0" euler="0 1.5708 0"
+            rgba="0.96 0.44 0.34 0" mass="0" contype="0" conaffinity="0"/>
+      <!-- 7 seeds — same relative positions as left half -->
+      <geom name="wm_right_seed1" type="ellipsoid" size="0.003 0.011 0.006"
+            pos="-0.063  0.028  0.038" euler="0  0.30  0.80" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_right_seed2" type="ellipsoid" size="0.003 0.010 0.006"
+            pos="-0.063 -0.032  0.025" euler="0 -0.25 -0.60" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_right_seed3" type="ellipsoid" size="0.003 0.011 0.006"
+            pos="-0.063  0.048 -0.018" euler="0  0.20 -0.50" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_right_seed4" type="ellipsoid" size="0.003 0.010 0.006"
+            pos="-0.063 -0.012 -0.048" euler="0 -0.35  0.70" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_right_seed5" type="ellipsoid" size="0.003 0.011 0.005"
+            pos="-0.063  0.018  0.056" euler="0  0.15  0.30" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_right_seed6" type="ellipsoid" size="0.003 0.009 0.005"
+            pos="-0.063 -0.042 -0.012" euler="0 -0.20  0.55" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_right_seed7" type="ellipsoid" size="0.003 0.010 0.005"
+            pos="-0.063  0.008 -0.030" euler="0  0.25 -0.40" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- Quarter A — wedge slice.
+         Design mirrors the half-watermelon geometry:
+           • Skin ellipsoid at body centre provides 3-D green dome visible from
+             all sides above the table.
+           • FACE 1 (+X body direction, first cut): disc centred at body (x,0,0)
+             — same pattern as wm_left_green/pith/face/core.
+           • FACE 2 (−Y body direction, second cut): disc centred at body (0,−y,0)
+             perpendicular to face 1 → wedge corner visible from camera.
+           • Body weld quaternion rotated −45° around Z so face1 points directly
+             toward camera (azimuth 158° camera sees +X,−Y surfaces; −45° Z rotation
+             maps body +X to the (0.707,−0.707) world direction that is 90% toward
+             the camera).  All disc centres have NO z-offset so the piece looks like
+             the half-watermelon (disc centred at body height, table just clips bottom).
+    -->
+    <body name="wm_quarter_A" pos="0.01 -0.30 -5.0">
+      <freejoint name="wm_qA_free"/>
+      <!-- Collision hull: flesh-layer wedge mesh (R=0.085) so contacts follow
+           the true wedge shape — fingertips rest ~5 mm inside the rind visual,
+           reading as pressure into the flesh. In contact-grasp mode the
+           record script re-bits this to contype/conaffinity 2 after cut 2:
+           it then collides ONLY with tabletop / plate / right-hand fingers,
+           never with the blade or the melon halves. -->
+      <!-- NOTE: bits must be non-zero at COMPILE time — geoms compiled with
+           contype=0 conaffinity=0 are dropped from the broadphase for good
+           and runtime re-enabling has no effect. cut_trigger_robot.reset()
+           zeroes these bits per episode (narrowphase honours runtime bits),
+           and the record script restores 2/2 after cut 2. -->
+      <geom name="wm_qA_col" type="mesh" mesh="wm_wedge_flesh"
+            mass="0.18" friction="1.60 0.12 0.04"
+            solref="0.02 1.2" solimp="0.9 0.97 0.001 0.5 2"
+            rgba="0 0 0 0" contype="2" conaffinity="2"/>
+      <!-- Green skin crescent: center shifted to body z=-0.080 (4 cm below disc center),
+           Z semi-axis=0.090 so the skin reaches body z=+0.010 (3 cm below disc top+0.043).
+           The skin only protrudes beyond face2_pith (r=0.083) in the range body z=-0.044
+           to z=-0.073 (table clip), forming a ~3 cm green crescent at the OUTER BOTTOM
+           curve. Upper 2/3 of disc has skin X < pith X → no green above → D-shape rind. -->
+      <!-- True quarter wedge: quarter-sphere mesh (axis along local X,
+           two perpendicular cut faces opening upward in a V, spherical rind
+           arc facing down) in 4 nested layers: rind, pith ring, flesh, core.
+           Inner layers are lifted +z so the cut faces show flesh with a pith
+           ring and a green rind outline, like a real melon wedge. -->
+      <geom name="wm_qA_skin" type="mesh" mesh="wm_wedge_rind"
+            rgba="0.13 0.45 0.10 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_face2_pith" type="mesh" mesh="wm_wedge_pith"
+            rgba="0.94 0.91 0.82 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_face2_flesh" type="mesh" mesh="wm_wedge_flesh"
+            rgba="0.88 0.10 0.10 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_face2_core" type="mesh" mesh="wm_wedge_core"
+            rgba="0.95 0.38 0.38 0" mass="0" contype="0" conaffinity="0"/>
+
+      <!-- Seeds on face2 cut surface, in the flesh zone. Face2 disc center at (0,-0.050,-0.040). -->
+      <geom name="wm_qA_seed1" type="ellipsoid" size="0.003 0.011 0.006"
+            pos=" 0.020 -0.062 -0.020" euler="0  0.30  0.80" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_seed2" type="ellipsoid" size="0.003 0.010 0.006"
+            pos="-0.018 -0.062 -0.015" euler="0 -0.25 -0.60" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_seed3" type="ellipsoid" size="0.003 0.011 0.006"
+            pos=" 0.005 -0.059 -0.005" euler="0  0.20 -0.50" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <!-- Juice splash drops: hidden by default, shown briefly when cut2 fires -->
+      <geom name="wm_qA_juice1" type="sphere" size="0.020" pos=" 0.018 -0.074 -0.012"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_juice2" type="sphere" size="0.016" pos="-0.028 -0.078  0.008"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_juice3" type="sphere" size="0.013" pos=" 0.010 -0.070  0.022"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_juice4" type="sphere" size="0.010" pos="-0.012 -0.076  0.030"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_juice5" type="sphere" size="0.012" pos=" 0.042 -0.058 -0.025"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qA_juice6" type="sphere" size="0.009" pos="-0.048 -0.052  0.042"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- Quarter B — identical geometry to Quarter A. -->
+    <body name="wm_quarter_B" pos="0.15 -0.30 -5.0">
+      <freejoint name="wm_qB_free"/>
+      <geom name="wm_qB_col" type="sphere" size="0.065"
+            mass="0.38" friction="0.90 0.08 0.03"
+            solref="0.04 1.4" solimp="0.8 0.95 0.001 0.5 2"
+            rgba="0 0 0 0" contype="0" conaffinity="0"/>
+      <!-- True quarter wedge: quarter-sphere mesh (axis along local X,
+           two perpendicular cut faces opening upward in a V, spherical rind
+           arc facing down) in 4 nested layers: rind, pith ring, flesh, core.
+           Inner layers are lifted +z so the cut faces show flesh with a pith
+           ring and a green rind outline, like a real melon wedge. -->
+      <geom name="wm_qB_skin" type="mesh" mesh="wm_wedge_rind"
+            rgba="0.13 0.45 0.10 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qB_face2_pith" type="mesh" mesh="wm_wedge_pith"
+            rgba="0.94 0.91 0.82 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qB_face2_flesh" type="mesh" mesh="wm_wedge_flesh"
+            rgba="0.88 0.10 0.10 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qB_face2_core" type="mesh" mesh="wm_wedge_core"
+            rgba="0.95 0.38 0.38 0" mass="0" contype="0" conaffinity="0"/>
+
+      <geom name="wm_qB_seed1" type="ellipsoid" size="0.003 0.011 0.006"
+            pos=" 0.020 -0.062 -0.020" euler="0  0.30  0.80" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qB_seed2" type="ellipsoid" size="0.003 0.010 0.006"
+            pos="-0.018 -0.062 -0.015" euler="0 -0.25 -0.60" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qB_seed3" type="ellipsoid" size="0.003 0.011 0.006"
+            pos=" 0.005 -0.059 -0.005" euler="0  0.20 -0.50" rgba="0.10 0.06 0.03 0" mass="0" contype="0" conaffinity="0"/>
+      <!-- Juice splash drops for quarter B -->
+      <geom name="wm_qB_juice1" type="sphere" size="0.018" pos=" 0.018 -0.074 -0.012"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qB_juice2" type="sphere" size="0.014" pos="-0.028 -0.078  0.008"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qB_juice3" type="sphere" size="0.011" pos=" 0.010 -0.070  0.022"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+      <geom name="wm_qB_juice4" type="sphere" size="0.009" pos="-0.040 -0.060  0.038"
+            rgba="0.92 0.08 0.06 0" mass="0" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- Fracture slab bodies: 4 layer pairs (L/R), each a freejoint rigid body.
+         Parked at z=100 (held by weld).  update_blade_penetration() teleports each pair
+         Griffith G≥G_c fracture: 8 rigid slab pairs (L/R), one per fracture plane.
+         Each accumulates energy E_i=∫F·v·w_i·dt (Gaussian depth weight); weld releases
+         when E_i≥G_c_i.  Impulse ∝ layer_depth × √k_wm (elastic energy conversion).
+         Color gradient: green=rind (tough) → red=flesh (soft).  contype=0: visual only. -->
+    <body name="wm_slab0_L" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab0_L_free"/>
+      <geom name="wm_slab0_L_vis" type="ellipsoid" size="0.045 0.042 0.007"
+            rgba="0.15 0.55 0.05 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab0_R" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab0_R_free"/>
+      <geom name="wm_slab0_R_vis" type="ellipsoid" size="0.045 0.042 0.007"
+            rgba="0.15 0.55 0.05 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab1_L" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab1_L_free"/>
+      <geom name="wm_slab1_L_vis" type="ellipsoid" size="0.062 0.042 0.007"
+            rgba="0.42 0.45 0.05 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab1_R" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab1_R_free"/>
+      <geom name="wm_slab1_R_vis" type="ellipsoid" size="0.062 0.042 0.007"
+            rgba="0.42 0.45 0.05 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab2_L" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab2_L_free"/>
+      <geom name="wm_slab2_L_vis" type="ellipsoid" size="0.073 0.042 0.007"
+            rgba="0.66 0.30 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab2_R" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab2_R_free"/>
+      <geom name="wm_slab2_R_vis" type="ellipsoid" size="0.073 0.042 0.007"
+            rgba="0.66 0.30 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab3_L" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab3_L_free"/>
+      <geom name="wm_slab3_L_vis" type="ellipsoid" size="0.082 0.042 0.007"
+            rgba="0.80 0.18 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab3_R" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab3_R_free"/>
+      <geom name="wm_slab3_R_vis" type="ellipsoid" size="0.082 0.042 0.007"
+            rgba="0.80 0.18 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab4_L" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab4_L_free"/>
+      <geom name="wm_slab4_L_vis" type="ellipsoid" size="0.088 0.042 0.007"
+            rgba="0.85 0.12 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab4_R" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab4_R_free"/>
+      <geom name="wm_slab4_R_vis" type="ellipsoid" size="0.088 0.042 0.007"
+            rgba="0.85 0.12 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab5_L" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab5_L_free"/>
+      <geom name="wm_slab5_L_vis" type="ellipsoid" size="0.093 0.042 0.007"
+            rgba="0.88 0.10 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab5_R" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab5_R_free"/>
+      <geom name="wm_slab5_R_vis" type="ellipsoid" size="0.093 0.042 0.007"
+            rgba="0.88 0.10 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab6_L" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab6_L_free"/>
+      <geom name="wm_slab6_L_vis" type="ellipsoid" size="0.096 0.042 0.007"
+            rgba="0.88 0.12 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab6_R" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab6_R_free"/>
+      <geom name="wm_slab6_R_vis" type="ellipsoid" size="0.096 0.042 0.007"
+            rgba="0.88 0.12 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab7_L" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab7_L_free"/>
+      <geom name="wm_slab7_L_vis" type="ellipsoid" size="0.098 0.042 0.007"
+            rgba="0.88 0.15 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+    <body name="wm_slab7_R" pos="0.44 -0.30 100.0">
+      <freejoint name="wm_slab7_R_free"/>
+      <geom name="wm_slab7_R_vis" type="ellipsoid" size="0.098 0.042 0.007"
+            rgba="0.88 0.15 0.08 0" mass="0.025" contype="0" conaffinity="0"/>
+    </body>
+
+  </worldbody>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       Equality constraints
+       pelvis_weld : fixes the robot to the ground (static standing pose)
+       wm_weld     : holds watermelon in place pre-cut; released by CutTrigger
+       ═══════════════════════════════════════════════════════════════════ -->
+  <equality>
+    <weld name="pelvis_weld" body1="world" body2="pelvis"/>
+    <weld name="wm_weld"     body1="world" body2="watermelon"/>
+    <weld name="wm_L_weld"   body1="world" body2="wm_half_L"/>
+    <weld name="wm_R_weld"   body1="world" body2="wm_half_R"/>
+    <weld name="wm_qA_weld"  body1="world" body2="wm_quarter_A"/>
+    <weld name="wm_qB_weld"  body1="world" body2="wm_quarter_B"/>
+    <!-- Fracture slab welds — 8 pairs parked at z=100; released per-layer by Griffith G≥G_c. -->
+    <weld name="wm_slab0_L_weld" body1="world" body2="wm_slab0_L"/>
+    <weld name="wm_slab0_R_weld" body1="world" body2="wm_slab0_R"/>
+    <weld name="wm_slab1_L_weld" body1="world" body2="wm_slab1_L"/>
+    <weld name="wm_slab1_R_weld" body1="world" body2="wm_slab1_R"/>
+    <weld name="wm_slab2_L_weld" body1="world" body2="wm_slab2_L"/>
+    <weld name="wm_slab2_R_weld" body1="world" body2="wm_slab2_R"/>
+    <weld name="wm_slab3_L_weld" body1="world" body2="wm_slab3_L"/>
+    <weld name="wm_slab3_R_weld" body1="world" body2="wm_slab3_R"/>
+    <weld name="wm_slab4_L_weld" body1="world" body2="wm_slab4_L"/>
+    <weld name="wm_slab4_R_weld" body1="world" body2="wm_slab4_R"/>
+    <weld name="wm_slab5_L_weld" body1="world" body2="wm_slab5_L"/>
+    <weld name="wm_slab5_R_weld" body1="world" body2="wm_slab5_R"/>
+    <weld name="wm_slab6_L_weld" body1="world" body2="wm_slab6_L"/>
+    <weld name="wm_slab6_R_weld" body1="world" body2="wm_slab6_R"/>
+    <weld name="wm_slab7_L_weld" body1="world" body2="wm_slab7_L"/>
+    <weld name="wm_slab7_R_weld" body1="world" body2="wm_slab7_R"/>
+  </equality>
+
+  <sensor>
+    <touch         name="blade_touch" site="blade_edge_zone"/>
+    <velocimeter   name="blade_vel"   site="blade_tip"/>
+    <accelerometer name="blade_accel" site="blade_tip"/>
+    <gyro          name="blade_gyro"  site="blade_tip"/>
+    <framequat     name="blade_ori"   objtype="site" objname="blade_tip"/>
+    <framelinvel   name="blade_linv"  objtype="site" objname="blade_tip"/>
+    <framepos      name="blade_pos"   objtype="site" objname="blade_tip"/>
+    <framepos      name="wm_pos"      objtype="site" objname="wm_center"/>
+    <framepos      name="left_pos"    objtype="site" objname="left_center"/>
+    <framepos      name="right_pos"   objtype="site" objname="right_center"/>
+    <!-- Fingertip tactile sensors (05-Dexterity): detect external contact (WM, table) -->
+    <touch         name="ft_touch_index"  site="ft_index"/>
+    <touch         name="ft_touch_middle" site="ft_middle"/>
+    <touch         name="ft_touch_ring"   site="ft_ring"/>
+    <touch         name="ft_touch_pinky"  site="ft_pinky"/>
+    <touch         name="ft_touch_thumb"  site="ft_thumb"/>
+    <!-- Handle grip sensors (prox phalanx contact with knife_handle, contype=2).
+         These are the primary closed-loop grip sensing inputs: each prox phalanx body
+         accumulates contact force from knife_handle, driving the per-finger MCP servo. -->
+    <touch         name="gh_touch_index"  site="gh_index"/>
+    <touch         name="gh_touch_middle" site="gh_middle"/>
+    <touch         name="gh_touch_ring"   site="gh_ring"/>
+    <touch         name="gh_touch_pinky"  site="gh_pinky"/>
+    <touch         name="gh_touch_thumb"  site="gh_thumb"/>
+  </sensor>
+
+  <!--
+    Actuators:
+      ctrl[0..4]  — right arm trajectory (RobotArmController)
+      ctrl[5..7]  — waist posture (hold at 0)
+      ctrl[8..9]  — head posture  (hold at 0)
+      ctrl[10..14]— left arm posture (hold at 0)
+  -->
+  <actuator>
+    <!-- Right arm: ctrl[0..4] -->
+    <position name="act_rsp" joint="right_shoulder_pitch_joint"
+              kp="500" kv="40" ctrllimited="true" ctrlrange="-3.08 2.04"/>
+    <position name="act_rsr" joint="right_shoulder_roll_joint"
+              kp="400" kv="30" ctrllimited="true" ctrlrange="-2.993 0.061"/>
+    <position name="act_rsy" joint="right_shoulder_yaw_joint"
+              kp="200" kv="20" ctrllimited="true" ctrlrange="-2.556 2.556"/>
+    <position name="act_re"  joint="right_elbow_joint"
+              kp="400" kv="30" ctrllimited="true" ctrlrange="-2.3556 0"/>
+    <position name="act_rw"  joint="right_wrist_yaw_joint"
+              kp="60" kv="6" ctrllimited="true" ctrlrange="-2.556 2.556"/>
+    <!-- Waist posture: ctrl[5..7] — high kp to resist upper-body gravity torque -->
+    <position name="act_wy"  joint="waist_yaw_joint"
+              kp="1500" kv="100" ctrllimited="true" ctrlrange="-3.43 2.382"/>
+    <position name="act_wp"  joint="waist_pitch_joint"
+              kp="2000" kv="120" ctrllimited="true" ctrlrange="-0.314 0.314"/>
+    <position name="act_wr"  joint="waist_roll_joint"
+              kp="1200" kv="80" ctrllimited="true" ctrlrange="-0.488 0.488"/>
+    <!-- Head posture: ctrl[8..9] -->
+    <position name="act_hy"  joint="head_yaw_joint"
+              kp="80"  kv="6"  ctrllimited="true" ctrlrange="-0.366 0.366"/>
+    <position name="act_hp"  joint="head_pitch_joint"
+              kp="80"  kv="6"  ctrllimited="true" ctrlrange="-0.3838 0.3838"/>
+    <!-- Left arm posture: ctrl[10..14] -->
+    <position name="act_lsp" joint="left_shoulder_pitch_joint"
+              kp="200" kv="15" ctrllimited="true" ctrlrange="-3.08 2.04"/>
+    <position name="act_lsr" joint="left_shoulder_roll_joint"
+              kp="200" kv="15" ctrllimited="true" ctrlrange="-0.061 2.993"/>
+    <position name="act_lsy" joint="left_shoulder_yaw_joint"
+              kp="150" kv="12" ctrllimited="true" ctrlrange="-2.556 2.556"/>
+    <position name="act_le"  joint="left_elbow_joint"
+              kp="200" kv="15" ctrllimited="true" ctrlrange="-2.3556 0"/>
+    <position name="act_lw"  joint="left_wrist_yaw_joint"
+              kp="100" kv="8"  ctrllimited="true" ctrlrange="-2.556 2.556"/>
+    <!-- Right-hand fingers: ctrl[15..29]  (0=gripped; MCP=base, PIP=mid, DIP=distal joint)
+         MCP kp doubled (3→6, thumb 3.5→7) to generate enough friction force on the
+         knife handle for closed-loop grip: 5 × kp × θ_err / lever_arm ≥ blade_load. -->
+    <position name="act_mcp_index"  joint="j_mcp_index"  kp="6.0" kv="0.50"
+              ctrllimited="true" ctrlrange="0    1.0"/>
+    <position name="act_pip_index"  joint="j_pip_index"  kp="2.0" kv="0.20"
+              ctrllimited="true" ctrlrange="0    0.7"/>
+    <position name="act_dip_index"  joint="j_dip_index"  kp="1.5" kv="0.40"
+              ctrllimited="true" ctrlrange="0    0.5"/>
+    <position name="act_mcp_middle" joint="j_mcp_middle" kp="6.0" kv="0.50"
+              ctrllimited="true" ctrlrange="0    1.0"/>
+    <position name="act_pip_middle" joint="j_pip_middle" kp="2.0" kv="0.20"
+              ctrllimited="true" ctrlrange="0    0.7"/>
+    <position name="act_dip_middle" joint="j_dip_middle" kp="1.5" kv="0.40"
+              ctrllimited="true" ctrlrange="0    0.5"/>
+    <position name="act_mcp_ring"   joint="j_mcp_ring"   kp="6.0" kv="0.50"
+              ctrllimited="true" ctrlrange="0    1.0"/>
+    <position name="act_pip_ring"   joint="j_pip_ring"   kp="2.0" kv="0.20"
+              ctrllimited="true" ctrlrange="0    0.7"/>
+    <position name="act_dip_ring"   joint="j_dip_ring"   kp="1.5" kv="0.40"
+              ctrllimited="true" ctrlrange="0    0.5"/>
+    <position name="act_mcp_pinky"  joint="j_mcp_pinky"  kp="5.0" kv="0.40"
+              ctrllimited="true" ctrlrange="0    1.0"/>
+    <position name="act_pip_pinky"  joint="j_pip_pinky"  kp="1.5" kv="0.15"
+              ctrllimited="true" ctrlrange="0    0.6"/>
+    <position name="act_dip_pinky"  joint="j_dip_pinky"  kp="1.2" kv="0.30"
+              ctrllimited="true" ctrlrange="0    0.4"/>
+    <position name="act_mcp_thumb"  joint="j_mcp_thumb"  kp="7.0" kv="0.60"
+              ctrllimited="true" ctrlrange="-1.0 0"/>
+    <position name="act_ip_thumb"   joint="j_ip_thumb"   kp="2.5" kv="0.25"
+              ctrllimited="true" ctrlrange="-0.7 0"/>
+    <position name="act_dip_thumb"  joint="j_dip_thumb"  kp="1.5" kv="0.40"
+              ctrllimited="true" ctrlrange="-0.5 0"/>
+  </actuator>
+
+  <!--
+    qpos layout (55 values):
+      [0:7]   pelvis freejoint  (x y z  qw qx qy qz)
+      [7:13]  left  leg 6 joints
+      [13:19] right leg 6 joints
+      [19:22] waist 3 joints
+      [22:24] head 2 joints         <- head is first child of torso_link
+      [24:29] left  arm 5 joints
+      [29:34] right arm 5 joints  ← right_shoulder_pitch at [27]
+      [32:34] head 2 joints
+      [34:41] watermelon freejoint
+      [41:48] wm_half_L freejoint
+      [48:55] wm_half_R freejoint
+
+    Right arm HOME pose: sp=-1.2, sr=0, sy=0, el=-1.0, wr=0
+    Knife tip at this pose: world (~0.25, -0.22, 0.82) → well above watermelon
+    Knife tip at STRIKE (sp=0.35, el=-0.1): world (~0.0, -0.28, 0.60) → below wm
+  -->
+  <!--
+    qpos layout (70 values with 15 finger joints — MCP+PIP+DIP interleaved depth-first):
+      [0:7]   pelvis freejoint
+      [7:13]  left  leg 6 joints
+      [13:19] right leg 6 joints
+      [19:22] waist 3 joints
+      [22:24] head  2 joints
+      [24:29] left  arm 5 joints
+      [29:34] right arm 5 joints
+      [34] j_mcp_index   [35] j_pip_index   [36] j_dip_index
+      [37] j_mcp_middle  [38] j_pip_middle  [39] j_dip_middle
+      [40] j_mcp_ring    [41] j_pip_ring    [42] j_dip_ring
+      [43] j_mcp_pinky   [44] j_pip_pinky   [45] j_dip_pinky
+      [46] j_mcp_thumb   [47] j_ip_thumb    [48] j_dip_thumb
+      [49] knife_slide_z
+      [50:57] watermelon freejoint
+      [57:64] wm_half_L freejoint
+      [64:71] wm_half_R freejoint
+      [71:78] wm_qA_free  [78:85] wm_qB_free
+      [85:92]   wm_slab0_L  [92:99]   wm_slab0_R   (d=1.5 mm, rind)
+      [99:106]  wm_slab1_L  [106:113] wm_slab1_R   (d=3.0 mm)
+      [113:120] wm_slab2_L  [120:127] wm_slab2_R   (d=4.5 mm)
+      [127:134] wm_slab3_L  [134:141] wm_slab3_R   (d=6.0 mm)
+      [141:148] wm_slab4_L  [148:155] wm_slab4_R   (d=7.5 mm)
+      [155:162] wm_slab5_L  [162:169] wm_slab5_R   (d=9.0 mm)
+      [169:176] wm_slab6_L  [176:183] wm_slab6_R   (d=10.5 mm)
+      [183:190] wm_slab7_L  [190:197] wm_slab7_R   (d=12.0 mm, flesh)
+  -->
+  <keyframe>
+    <key name="home"
+         qpos="0 0 0.68  1 0 0 0
+               0 0 0 0 0 0
+               0 0 0 0 0 0
+               0 0 0
+               0 0
+               0 0 0 0 0
+               -1.2 0 0 -1.0 0
+               0.9 0.5 0.3  0.9 0.5 0.3  0.9 0.5 0.3  0.9 0.4 0.2  -0.9 -0.5 -0.3
+               0
+               0.44 -0.30 0.64  1 0 0 0
+               0.01 -0.30 100.0  1 0 0 0
+               0.15 -0.30 100.0  1 0 0 0
+               0.01 -0.30 -5.0   1 0 0 0
+               0.15 -0.30 -5.0   1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0
+               0.44 -0.30 100.0  1 0 0 0"/>
+  </keyframe>
+
+</mujoco>

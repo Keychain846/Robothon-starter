@@ -1,0 +1,218 @@
+{
+  "submission": "FF Master + Futurist \u2014 Bimanual Watermelon Quartering",
+  "timestamp_utc": "2026-07-11T21:19:55Z",
+  "n_episodes": 8,
+  "success_rate": 1.0,
+  "n_success": 8,
+  "avg_cut_time_s": 2.137,
+  "std_cut_time_s": 0.0273,
+  "avg_posture_rms_rad": 0.0384,
+  "avg_cut_quality_pct": 59.0,
+  "wm_seed": 42,
+  "wm_offsets_cm": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      -1.0,
+      2.1
+    ],
+    [
+      -2.5,
+      0.8
+    ],
+    [
+      -0.6,
+      1.4
+    ],
+    [
+      -1.4,
+      1.2
+    ],
+    [
+      -4.1,
+      2.4
+    ],
+    [
+      -0.1,
+      1.8
+    ],
+    [
+      -1.1,
+      2.1
+    ]
+  ],
+  "render": {
+    "video_path": null,
+    "fps": 30,
+    "width": 1280,
+    "height": 720
+  },
+  "sensor_types": [
+    "touch",
+    "velocimeter",
+    "accelerometer",
+    "gyro",
+    "framequat",
+    "framelinvel",
+    "framepos"
+  ],
+  "n_sensors": 10,
+  "n_control_phases": 22,
+  "robots": [
+    "FF Master (cuts)",
+    "Futurist (serves)"
+  ],
+  "material_k_per_episode_Npm": [
+    10989.0,
+    11340.9,
+    11341.3,
+    14765.0,
+    14979.3,
+    14979.3,
+    18174.6,
+    18295.9
+  ],
+  "material_k_final_Npm": 18295.9,
+  "material_profile": "firm",
+  "grasp_mode": "friction",
+  "futurist_arm_drive": "qpos",
+  "serve_delivery_err_mm": [
+    10.9,
+    16.7,
+    62.6,
+    11.4,
+    7.2,
+    14.2,
+    5.1,
+    16.6
+  ],
+  "grasp_closure_fingertips": [
+    [
+      4,
+      -58.3
+    ],
+    [
+      4,
+      -58.7
+    ],
+    [
+      4,
+      -58.6
+    ],
+    [
+      4,
+      -62.4
+    ],
+    [
+      4,
+      -62.7
+    ],
+    [
+      4,
+      -61.5
+    ],
+    [
+      4,
+      -61.7
+    ],
+    [
+      4,
+      -62.8
+    ]
+  ],
+  "grip_force_N_carry": [
+    1.3,
+    1.3,
+    1.3,
+    1.2,
+    1.2,
+    1.0,
+    1.1,
+    1.2
+  ],
+  "serve_success_rate": 1.0,
+  "episodes": [
+    {
+      "ep": 1,
+      "success": "YES",
+      "cut_time_s": "2.176",
+      "min_blade_mm": "82.0",
+      "max_force_N": "149.9",
+      "posture_rms_rad": "0.0384",
+      "cut_quality_pct": "63.3",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 2,
+      "success": "YES",
+      "cut_time_s": "2.142",
+      "min_blade_mm": "65.5",
+      "max_force_N": "123.8",
+      "posture_rms_rad": "0.0386",
+      "cut_quality_pct": "58.1",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 3,
+      "success": "YES",
+      "cut_time_s": "2.108",
+      "min_blade_mm": "56.2",
+      "max_force_N": "124.4",
+      "posture_rms_rad": "0.0384",
+      "cut_quality_pct": "56.8",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 4,
+      "success": "YES",
+      "cut_time_s": "2.154",
+      "min_blade_mm": "70.4",
+      "max_force_N": "133.5",
+      "posture_rms_rad": "0.0387",
+      "cut_quality_pct": "60.4",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 5,
+      "success": "YES",
+      "cut_time_s": "2.144",
+      "min_blade_mm": "64.6",
+      "max_force_N": "123.1",
+      "posture_rms_rad": "0.0387",
+      "cut_quality_pct": "57.7",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 6,
+      "success": "YES",
+      "cut_time_s": "2.082",
+      "min_blade_mm": "49.1",
+      "max_force_N": "139.7",
+      "posture_rms_rad": "0.0377",
+      "cut_quality_pct": "56.0",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 7,
+      "success": "YES",
+      "cut_time_s": "2.152",
+      "min_blade_mm": "73.6",
+      "max_force_N": "137.8",
+      "posture_rms_rad": "0.0381",
+      "cut_quality_pct": "61.8",
+      "failure": "\u2014"
+    },
+    {
+      "ep": 8,
+      "success": "YES",
+      "cut_time_s": "2.138",
+      "min_blade_mm": "64.6",
+      "max_force_N": "121.8",
+      "posture_rms_rad": "0.0385",
+      "cut_quality_pct": "57.7",
+      "failure": "\u2014"
+    }
+  ]
+}

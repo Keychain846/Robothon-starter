@@ -1,0 +1,14 @@
+name: robothon
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - mujoco>=3.0
+    - numpy
+    - imageio
+    - imageio-ffmpeg
+    - Pillow
+    - pytest>=7.0.0
